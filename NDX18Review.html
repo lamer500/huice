@@ -1,0 +1,367 @@
+<title>纳指十八年牛熊录</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  :root{
+    --paper:#ede9e6;
+    --paper-raised:#f6f3f0;
+    --ink:#1d1b22;
+    --ink-soft:#524d58;
+    --muted:#87818b;
+    --rule:#d4cdd6;
+    --rule-strong:#b3a9b8;
+    --bull:#2f6b4f;
+    --bull-soft:#dce8de;
+    --bear:#a6362a;
+    --bear-soft:#f1ded9;
+    --gold:#6a4c93;
+    --gold-soft:#e6def0;
+    --shadow: 0 1px 0 rgba(29,27,34,0.06);
+    --serif: "Noto Serif SC", "Songti SC", "STSong", serif;
+    --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#17151a;
+      --paper-raised:#1e1c22;
+      --ink:#e7e3e8;
+      --ink-soft:#b6afba;
+      --muted:#827c86;
+      --rule:#312e37;
+      --rule-strong:#47434e;
+      --bull:#5fae86;
+      --bull-soft:#1c2b23;
+      --bear:#e2695a;
+      --bear-soft:#3a231e;
+      --gold:#a389cf;
+      --gold-soft:#2a2333;
+      --shadow: 0 1px 0 rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#17151a;
+    --paper-raised:#1e1c22;
+    --ink:#e7e3e8;
+    --ink-soft:#b6afba;
+    --muted:#827c86;
+    --rule:#312e37;
+    --rule-strong:#47434e;
+    --bull:#5fae86;
+    --bull-soft:#1c2b23;
+    --bear:#e2695a;
+    --bear-soft:#3a231e;
+    --gold:#a389cf;
+    --gold-soft:#2a2333;
+    --shadow: 0 1px 0 rgba(0,0,0,0.4);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--gold-soft); }
+
+  .page{ max-width:920px; margin:0 auto; padding:clamp(28px,5vw,72px) clamp(18px,4vw,32px) 100px; }
+
+  header.masthead{ border-bottom:2px solid var(--ink); padding-bottom:22px; margin-bottom:36px; }
+  .eyebrow{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--muted); display:flex; gap:10px; align-items:center; margin-bottom:14px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--bull);}
+  h1{
+    font-family:var(--serif); font-weight:900; font-size:clamp(28px,4.4vw,42px);
+    margin:0 0 10px; text-wrap:balance; letter-spacing:0.01em;
+  }
+  .dek{ font-size:16px; color:var(--ink-soft); max-width:62ch; margin:0; }
+
+  .overview{ margin:0 0 40px; }
+  .overview h2{ font-size:13px; }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--rule-strong); background:var(--paper-raised); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:760px; font-size:14px; }
+  thead th{
+    font-family:var(--mono); font-weight:600; font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--muted); text-align:left; padding:12px 14px; border-bottom:1px solid var(--rule-strong); white-space:nowrap;
+  }
+  tbody td{ padding:12px 14px; border-bottom:1px solid var(--rule); vertical-align:top; }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background:rgba(0,0,0,0.02); }
+  td.phase-name{ font-weight:600; white-space:nowrap; }
+  td.range{ font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink-soft); }
+  .chg{ font-family:var(--mono); font-weight:700; font-variant-numeric:tabular-nums; padding:2px 7px; border-radius:3px; white-space:nowrap; display:inline-block; }
+  .chg.up{ color:var(--bull); background:var(--bull-soft); }
+  .chg.down{ color:var(--bear); background:var(--bear-soft); }
+
+  .prelude{
+    margin:0 0 44px;
+    padding:16px 18px;
+    background:var(--gold-soft);
+    border:1px dashed var(--rule-strong);
+    font-size:14.5px;
+    color:var(--ink-soft);
+  }
+  .prelude b{ color:var(--ink); font-family:var(--serif); }
+
+  .timeline{ position:relative; padding-left:28px; border-left:2px solid var(--rule-strong); }
+  .entry{ position:relative; padding-bottom:56px; }
+  .entry:last-child{ padding-bottom:0; }
+  .entry::before{
+    content:""; position:absolute; left:-34px; top:6px; width:12px; height:12px;
+    border-radius:50%; background:var(--paper); border:2.5px solid var(--dot-color, var(--ink));
+  }
+  .entry.up::before{ --dot-color: var(--bull); }
+  .entry.down::before{ --dot-color: var(--bear); }
+  .entry.flat::before{ --dot-color: var(--gold); }
+
+  .entry-head{ display:flex; flex-wrap:wrap; align-items:baseline; gap:10px 14px; margin-bottom:6px; }
+  .entry-num{ font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:0.06em; }
+  .entry-dates{ font-family:var(--mono); font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .entry h3{ font-family:var(--serif); font-size:clamp(20px,2.6vw,26px); font-weight:700; margin:2px 0 4px; text-wrap:balance; flex-basis:100%; }
+  .entry .tagline{ color:var(--ink-soft); font-size:15px; margin:0 0 18px; max-width:64ch; }
+
+  .stat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-bottom:20px; }
+  .stat{ background:var(--paper-raised); padding:12px 14px; }
+  .stat .k{ font-family:var(--mono); font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:5px; }
+  .stat .v{ font-family:var(--mono); font-size:16px; font-weight:600; font-variant-numeric:tabular-nums; color:var(--ink); }
+  .stat .v.up{ color:var(--bull); }
+  .stat .v.down{ color:var(--bear); }
+
+  .entry-body{ display:grid; gap:14px; }
+  .block{ padding-left:14px; border-left:3px solid var(--rule-strong); }
+  .block.gold{ border-left-color:var(--gold); }
+  .block.bull{ border-left-color:var(--bull); }
+  .block.bear{ border-left-color:var(--bear); }
+  .block h4{ font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 5px; }
+  .block p{ margin:0; font-size:15px; color:var(--ink); max-width:66ch; }
+  .block p + p{ margin-top:8px; }
+
+  .lesson{ margin-top:16px; background:var(--gold-soft); border:1px dashed var(--rule-strong); padding:14px 16px; font-size:14.5px; color:var(--ink-soft); }
+  .lesson b{ color:var(--ink); font-family:var(--serif); }
+
+  .closing{ margin-top:60px; padding-top:28px; border-top:2px solid var(--ink); }
+  .closing h2{ font-family:var(--serif); font-size:22px; margin:0 0 14px; }
+  .closing p{ max-width:68ch; color:var(--ink-soft); font-size:15px; }
+  .closing ol{ padding-left:20px; max-width:68ch; }
+  .closing li{ margin-bottom:10px; font-size:15px; }
+  .closing li b{ color:var(--ink); }
+
+  footer{ margin-top:48px; font-family:var(--mono); font-size:11.5px; color:var(--muted); letter-spacing:0.02em; }
+
+  @media (max-width:600px){
+    .timeline{ padding-left:20px; }
+    .entry::before{ left:-25px; width:10px; height:10px; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow"><span class="dot"></span>纳指复盘 · 2007—2026</div>
+    <h1>纳指十八年牛熊录</h1>
+    <p class="dek">同一段十八年，纳斯达克综合指数的涨跌幅永远比标普500更极端——跌得更深、涨得更猛，因为它的血液里流的是成长股和杠杆化的预期。与《标普十八年牛熊录》《沪指十八年牛熊录》三份对照阅读。</p>
+  </header>
+
+  <div class="prelude"><b>背景：一道尚未愈合的伤疤。</b> 2007年10月纳指触及2861点新高时，距离2000年互联网泡沫5048点的历史峰值仍有43%的差距——这道伤疤直到2015年4月23日才真正愈合，用了整整15年零1个月。也就是说，本文要复盘的"18年"，纳指其实是带着上一轮泡沫的未愈伤口进场的。</div>
+
+  <section class="overview">
+    <h2 class="eyebrow">全景速览</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>阶段</th><th>区间</th><th>点位</th><th>涨跌幅</th><th>时长</th><th>核心驱动</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="phase-name">① 次贷崩溃</td>
+            <td class="range">2007.10–2009.03</td>
+            <td class="range">2861→1265</td>
+            <td><span class="chg down">−55.6%</span></td>
+            <td class="range">17个月</td>
+            <td>金融危机 + 尚未走出互联网泡沫阴影</td>
+          </tr>
+          <tr>
+            <td class="phase-name">② 补涨长牛</td>
+            <td class="range">2009.03–2020.02</td>
+            <td class="range">1265→9838</td>
+            <td><span class="chg up">+678%</span></td>
+            <td class="range">约11年</td>
+            <td>2015年补涨突破2000年高点 + 移动互联网/云计算/FAANG</td>
+          </tr>
+          <tr>
+            <td class="phase-name">③ COVID闪崩</td>
+            <td class="range">2020.02–2020.03</td>
+            <td class="range">9838→6631</td>
+            <td><span class="chg down">−32.6%</span></td>
+            <td class="range">33天</td>
+            <td>全球封锁，但居家办公科技需求提供缓冲</td>
+          </tr>
+          <tr>
+            <td class="phase-name">④ 成长股狂热</td>
+            <td class="range">2020.03–2021.11</td>
+            <td class="range">6631→16212</td>
+            <td><span class="chg up">+144%</span></td>
+            <td class="range">20个月</td>
+            <td>零利率追捧无盈利成长股 + SPAC/新股狂潮</td>
+          </tr>
+          <tr>
+            <td class="phase-name">⑤ 加息暴跌</td>
+            <td class="range">2021.11–2022.12</td>
+            <td class="range">16212→10088</td>
+            <td><span class="chg down">−37.8%</span></td>
+            <td class="range">13个月</td>
+            <td>激进加息对长久期成长股估值的重锤</td>
+          </tr>
+          <tr>
+            <td class="phase-name">⑥ AI超级牛（进行中）</td>
+            <td class="range">2022.12–2026.08</td>
+            <td class="range">10088→~23000</td>
+            <td><span class="chg up">约+128%</span></td>
+            <td class="range">约44个月</td>
+            <td>生成式AI + 英伟达/博通等芯片股领涨</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="timeline">
+
+    <article class="entry down">
+      <div class="entry-head">
+        <span class="entry-num">01 / 06</span>
+        <span class="entry-dates">2007.10 — 2009.03</span>
+        <h3>次贷崩溃：伤未愈，又添新伤</h3>
+      </div>
+      <p class="tagline">纳指在这轮危机里的起点，本身就是一个尚未走出上一轮泡沫的"半血"状态。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">峰值→谷值</span><span class="v">2861 → 1265</span></div>
+        <div class="stat"><span class="k">跌幅</span><span class="v down">−55.6%</span></div>
+        <div class="stat"><span class="k">距2000年峰值</span><span class="v">仍低43%</span></div>
+        <div class="stat"><span class="k">谷值日期</span><span class="v">2009.03.09</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bear"><h4>双重伤害</h4><p>2007年10月见顶的2861点，距离2000年3月的5048点历史峰值仍有43%的差距——纳指用了七年多都没能收复失地，此时又叠加金融危机的信贷冻结冲击，科技和金融股同步下跌，跌幅与标普500的57%相近。</p></div>
+        <div class="block gold"><h4>为什么没有更惨</h4><p>与2000年不同，这轮纳指成分股（微软、思科、英特尔等）已经历过一轮估值出清，盈利质量比2000年互联网泡沫时期扎实得多，跌幅主要来自系统性流动性冲击，而非成分股本身的商业模式证伪。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>纳指的历史提醒我们，"指数创新高"不等于"个股价值被兑现"——2000年那批泡沫股的估值出清用了整整15年才被真实盈利填平，这是判断任何一轮科技股狂热时都值得参照的时间尺度。</div>
+    </article>
+
+    <article class="entry up">
+      <div class="entry-head">
+        <span class="entry-num">02 / 06</span>
+        <span class="entry-dates">2009.03 — 2020.02</span>
+        <h3>补涨长牛：从填坑到FAANG统治</h3>
+      </div>
+      <p class="tagline">前六年是给2000年泡沫"填坑"，2015年之后才是真正意义上的新高——678%的涨幅里，一半是补涨，一半是移动互联网时代的真实盈利兑现。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">谷值→峰值</span><span class="v">1265 → 9838</span></div>
+        <div class="stat"><span class="k">累计涨幅</span><span class="v up">+678%</span></div>
+        <div class="stat"><span class="k">收复2000年高点</span><span class="v">2015.04.23</span></div>
+        <div class="stat"><span class="k">耗时</span><span class="v">15年1个月</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bull"><h4>两段式行情</h4><p>2009-2015年是漫长的"填坑"阶段，市场对科技股估值极度谨慎；2015年4月23日纳指收于5056.06点，首次超过2000年3月10日创下的5048.62点纪录，此时市场市盈率约25倍，远低于2000年峰值时的190倍，是一次估值健康得多的"新高"。此后iPhone普及、云计算SaaS化、社交媒体广告变现共同驱动了2015-2020年的加速上涨。</p></div>
+        <div class="block gold"><h4>与标普的分化</h4><p>同一时期标普500涨约400%，纳指涨约678%——差距主要来自苹果、亚马逊、谷歌、Facebook等科技巨头的盈利增速持续跑赢传统行业，纳指对利率和估值预期的敏感度也因此系统性高于标普。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>"15年填坑"这个时间尺度，是理解纳指为什么波动性天然更高的关键——它的成分股盈利更依赖长期增长预期兑现，一旦预期证伪，估值消化的时间会远超普通指数。</div>
+    </article>
+
+    <article class="entry down">
+      <div class="entry-head">
+        <span class="entry-num">03 / 06</span>
+        <span class="entry-dates">2020.02 — 2020.03</span>
+        <h3>COVID闪崩：居家办公需求提供了一层缓冲</h3>
+      </div>
+      <p class="tagline">同一场闪崩里，纳指的跌幅反而略小于标普500——因为居家办公、在线消费的需求预期，让部分科技巨头提前被市场定价为"受益者"。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">峰值→谷值</span><span class="v">9838 → 6631</span></div>
+        <div class="stat"><span class="k">跌幅</span><span class="v down">−32.6%</span></div>
+        <div class="stat"><span class="k">对比标普跌幅</span><span class="v">−34%</span></div>
+        <div class="stat"><span class="k">用时</span><span class="v">33天</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bear"><h4>普跌但有分化</h4><p>恐慌情绪不分板块，纳指同样遭遇急速抛售，但亚马逊、微软、Netflix、Zoom等"居家经济"受益股跌幅明显小于航空、能源、线下零售，这是市场第一次系统性地把"数字化生存能力"定价进科技股估值。</p></div>
+        <div class="block gold"><h4>率先创新高</h4><p>受益于这层结构性支撑，纳指恢复速度比标普更快，2020年6月即率先突破前高，比标普500早了约两个月。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>这是纳指历史上少有的"危机中相对抗跌"的样本——当危机本身的性质恰好利好数字化/线上业务时，成长股的高估值反而会成为优势而非负担。</div>
+    </article>
+
+    <article class="entry up">
+      <div class="entry-head">
+        <span class="entry-num">04 / 06</span>
+        <span class="entry-dates">2020.03 — 2021.11</span>
+        <h3>成长股狂热：零利率下的无盈利公司盛宴</h3>
+      </div>
+      <p class="tagline">144%的涨幅里，涨得最猛的往往是最没有盈利、故事讲得最性感的那批公司——这是纳指历史上投机成分最重的一段。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">谷值→峰值</span><span class="v">6631 → 16212</span></div>
+        <div class="stat"><span class="k">涨幅</span><span class="v up">+144%</span></div>
+        <div class="stat"><span class="k">峰值日期</span><span class="v">2021.11.19</span></div>
+        <div class="stat"><span class="k">典型现象</span><span class="v">SPAC热潮、meme股</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bull"><h4>驱动因素</h4><p>零利率环境下，未来现金流的贴现价值被系统性推高，市场愿意为"讲得通的成长故事"支付极高的估值倍数；SPAC借壳上市数量在2021年创下历史纪录，大量尚无稳定盈利的公司借此登陆纳斯达克。</p></div>
+        <div class="block bear"><h4>见顶伏笔</h4><p>2021年下半年，部分明星成长股股价已在指数创新高前率先见顶回落（"指数新高、个股分化"是本轮见顶最早的信号之一），2021年11月19日纳指见顶16212点后，通胀数据和Taper预期成为压垮情绪的最后一根稻草。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>纳指对利率的敏感度在这一阶段体现得淋漓尽致——当无风险利率趋近于零，成长股定价模型里最重要的"折现率"分母趋近于零，估值理论上可以无限扩张，这也解释了为什么随后的加息会造成如此剧烈的重估。</div>
+    </article>
+
+    <article class="entry down">
+      <div class="entry-head">
+        <span class="entry-num">05 / 06</span>
+        <span class="entry-dates">2021.11 — 2022.12</span>
+        <h3>加息暴跌：成长股定价模型的反向验证</h3>
+      </div>
+      <p class="tagline">同一轮加息周期里，纳指跌幅比标普500深了近10个百分点——利率上升对"长久期资产"的杀伤力，纳指是最直接的试验场。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">峰值→谷值</span><span class="v">16212 → 10088</span></div>
+        <div class="stat"><span class="k">跌幅</span><span class="v down">−37.8%</span></div>
+        <div class="stat"><span class="k">对比标普跌幅</span><span class="v">−28%</span></div>
+        <div class="stat"><span class="k">谷值日期</span><span class="v">2022.12.28</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bear"><h4>放大器效应</h4><p>美联储把利率从接近零推高到4.25%-4.5%，折现率的上升对现金流集中在遥远未来的成长股杀伤力呈几何级放大；大量2020-2021年上市、从未盈利的SPAC公司股价跌幅普遍超过80%，部分甚至退市。</p></div>
+        <div class="block gold"><h4>分化中的韧性</h4><p>与2000年不同，苹果、微软、谷歌等权重股虽同样下跌，但跌幅明显小于无盈利成长股，盈利质量在这轮调整中重新成为定价的核心变量，为下一轮"真AI叙事"（有实际收入和资本开支支撑）的行情做了铺垫。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>这轮暴跌完成了对2020-2021年泡沫成分的一次"精准爆破"——真正有盈利支撑的科技龙头跌幅可控，纯故事型公司近乎腰斩甚至清零，这个分化直接决定了2023年以后谁能率先反弹。</div>
+    </article>
+
+    <article class="entry up">
+      <div class="entry-head">
+        <span class="entry-num">06 / 06</span>
+        <span class="entry-dates">2022.12 — 2026.08（进行中）</span>
+        <h3>AI超级牛：芯片股扛旗，创新高频率史无前例</h3>
+      </div>
+      <p class="tagline">从10088点到突破26000点，这轮涨幅比标普500更陡峭——因为AI资本开支的直接受益者，绝大多数就集中在纳斯达克。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">谷值→现价</span><span class="v">10088 → ~23000+</span></div>
+        <div class="stat"><span class="k">2023/2024/2025涨幅</span><span class="v up">+43% / +33% / +21%</span></div>
+        <div class="stat"><span class="k">突破20000点</span><span class="v">2024.12</span></div>
+        <div class="stat"><span class="k">2026年5月纪录</span><span class="v">26247点</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bull"><h4>行情引擎</h4><p>2022年11月ChatGPT发布点燃生成式AI叙事，英伟达、博通等AI芯片股连续多年领涨，2024年12月纳指首次突破20000点，2026年5月8日单周上涨4.5%后收于26247.08点历史新高，驱动力是一连串超预期的科技巨头财报和持续加码的AI基建投资。</p></div>
+        <div class="block gold"><h4>与2000年的镜像对比</h4><p>市场对这轮上涨最大的争议正是"这次和2000年有何不同"——支持者强调这轮龙头股(英伟达、微软等)有真实的收入和自由现金流支撑,并非纯概念炒作;但前十大权重股集中度已超过2000年峰值,一旦AI资本开支的投资回报被证伪,纳指作为对这套叙事暴露度最高的指数,重估幅度大概率也会是三大指数中最剧烈的。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>纳指永远是"三大指数中最诚实的风险计"——它涨得最猛,是因为AI叙事的受益股最集中;它一旦调整,也最可能跌得最深,这个规律从2000年到2022年从未失效,没有理由这一次会不一样。</div>
+    </article>
+
+  </div>
+
+  <section class="closing">
+    <h2>三份复盘放在一起看：波动率的排序从未改变</h2>
+    <ol>
+      <li><b>同一场危机，跌幅排序总是"纳指 &gt; 标普 &gt; A股主板"(极端杠杆事件除外)。</b>2022年加息熊市里纳指跌37.8%、标普跌28%,本质上是"成长股久期"这一个变量在起作用——纳指的现金流预期更依赖遥远的未来,对利率变化的弹性天然最大。</li>
+      <li><b>纳指的"填坑"历史,是理解泡沫破裂代价的最佳标尺。</b>2000年那轮泡沫的估值出清,纳指用了15年才真正填平——这个时间尺度提醒我们,当下这轮AI牛市即便逻辑扎实,也不能假设一旦出现重估,修复会很快完成。</li>
+      <li><b>三个市场目前站在同一条流动性周期线上,但敏感度完全不同。</b>A股慢牛依赖政策资金托底、标普依赖七巨头盈利兑现、纳指则是这套逻辑里弹性最大的"放大器"——同样的AI叙事降温,对三个指数的冲击力度会依次放大,这也是为什么每次全球risk-off,纳指永远是跌幅最深的那一个。</li>
+    </ol>
+  </section>
+
+  <footer>数据来源：纳斯达克官方公开数据、公开财经媒体报道整理 · 点位与涨跌幅为区间近似值，已在正文标注</footer>
+
+</div>

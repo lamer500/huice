@@ -1,0 +1,400 @@
+<title>标普十八年牛熊录</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  :root{
+    --paper:#eeeae2;
+    --paper-raised:#f6f3ec;
+    --ink:#1c1f22;
+    --ink-soft:#4d545a;
+    --muted:#83898d;
+    --rule:#d2cec3;
+    --rule-strong:#b3ae9e;
+    --bull:#2f6b4f;
+    --bull-soft:#dce8de;
+    --bear:#a6362a;
+    --bear-soft:#f1ded9;
+    --gold:#2e5a8f;
+    --gold-soft:#dbe4ee;
+    --shadow: 0 1px 0 rgba(28,31,34,0.06);
+    --serif: "Noto Serif SC", "Songti SC", "STSong", serif;
+    --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#15181c;
+      --paper-raised:#1c2024;
+      --ink:#e6e7e2;
+      --ink-soft:#b5bab8;
+      --muted:#7c8386;
+      --rule:#2e3236;
+      --rule-strong:#454a4e;
+      --bull:#5fae86;
+      --bull-soft:#1c2b23;
+      --bear:#e2695a;
+      --bear-soft:#3a231e;
+      --gold:#7ba7dd;
+      --gold-soft:#1c2a3a;
+      --shadow: 0 1px 0 rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#15181c;
+    --paper-raised:#1c2024;
+    --ink:#e6e7e2;
+    --ink-soft:#b5bab8;
+    --muted:#7c8386;
+    --rule:#2e3236;
+    --rule-strong:#454a4e;
+    --bull:#5fae86;
+    --bull-soft:#1c2b23;
+    --bear:#e2695a;
+    --bear-soft:#3a231e;
+    --gold:#7ba7dd;
+    --gold-soft:#1c2a3a;
+    --shadow: 0 1px 0 rgba(0,0,0,0.4);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--gold-soft); }
+
+  .page{
+    max-width:920px;
+    margin:0 auto;
+    padding:clamp(28px,5vw,72px) clamp(18px,4vw,32px) 100px;
+  }
+
+  header.masthead{
+    border-bottom:2px solid var(--ink);
+    padding-bottom:22px;
+    margin-bottom:36px;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-bottom:14px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--bull);}
+  h1{
+    font-family:var(--serif);
+    font-weight:900;
+    font-size:clamp(28px,4.4vw,42px);
+    margin:0 0 10px;
+    text-wrap:balance;
+    letter-spacing:0.01em;
+  }
+  .dek{
+    font-size:16px;
+    color:var(--ink-soft);
+    max-width:62ch;
+    margin:0;
+  }
+
+  .overview{ margin:0 0 52px; }
+  .overview h2{ font-size:13px; }
+  .table-wrap{
+    overflow-x:auto;
+    border:1px solid var(--rule-strong);
+    background:var(--paper-raised);
+    box-shadow:var(--shadow);
+  }
+  table{ border-collapse:collapse; width:100%; min-width:760px; font-size:14px; }
+  thead th{
+    font-family:var(--mono);
+    font-weight:600;
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    text-align:left;
+    padding:12px 14px;
+    border-bottom:1px solid var(--rule-strong);
+    white-space:nowrap;
+  }
+  tbody td{ padding:12px 14px; border-bottom:1px solid var(--rule); vertical-align:top; }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background:rgba(0,0,0,0.02); }
+  td.phase-name{ font-weight:600; white-space:nowrap; }
+  td.range{ font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink-soft); }
+  .chg{
+    font-family:var(--mono); font-weight:700; font-variant-numeric:tabular-nums;
+    padding:2px 7px; border-radius:3px; white-space:nowrap; display:inline-block;
+  }
+  .chg.up{ color:var(--bull); background:var(--bull-soft); }
+  .chg.down{ color:var(--bear); background:var(--bear-soft); }
+
+  .timeline{ position:relative; padding-left:28px; border-left:2px solid var(--rule-strong); }
+  .entry{ position:relative; padding-bottom:56px; }
+  .entry:last-child{ padding-bottom:0; }
+  .entry::before{
+    content:""; position:absolute; left:-34px; top:6px; width:12px; height:12px;
+    border-radius:50%; background:var(--paper); border:2.5px solid var(--dot-color, var(--ink));
+  }
+  .entry.up::before{ --dot-color: var(--bull); }
+  .entry.down::before{ --dot-color: var(--bear); }
+  .entry.flat::before{ --dot-color: var(--gold); }
+
+  .entry-head{ display:flex; flex-wrap:wrap; align-items:baseline; gap:10px 14px; margin-bottom:6px; }
+  .entry-num{ font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:0.06em; }
+  .entry-dates{ font-family:var(--mono); font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .entry h3{ font-family:var(--serif); font-size:clamp(20px,2.6vw,26px); font-weight:700; margin:2px 0 4px; text-wrap:balance; flex-basis:100%; }
+  .entry .tagline{ color:var(--ink-soft); font-size:15px; margin:0 0 18px; max-width:64ch; }
+
+  .stat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-bottom:20px; }
+  .stat{ background:var(--paper-raised); padding:12px 14px; }
+  .stat .k{ font-family:var(--mono); font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:5px; }
+  .stat .v{ font-family:var(--mono); font-size:16px; font-weight:600; font-variant-numeric:tabular-nums; color:var(--ink); }
+  .stat .v.up{ color:var(--bull); }
+  .stat .v.down{ color:var(--bear); }
+
+  .entry-body{ display:grid; gap:14px; }
+  .block{ padding-left:14px; border-left:3px solid var(--rule-strong); }
+  .block.gold{ border-left-color:var(--gold); }
+  .block.bull{ border-left-color:var(--bull); }
+  .block.bear{ border-left-color:var(--bear); }
+  .block h4{ font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 5px; }
+  .block p{ margin:0; font-size:15px; color:var(--ink); max-width:66ch; }
+  .block p + p{ margin-top:8px; }
+
+  .lesson{ margin-top:16px; background:var(--gold-soft); border:1px dashed var(--rule-strong); padding:14px 16px; font-size:14.5px; color:var(--ink-soft); }
+  .lesson b{ color:var(--ink); font-family:var(--serif); }
+
+  .closing{ margin-top:60px; padding-top:28px; border-top:2px solid var(--ink); }
+  .closing h2{ font-family:var(--serif); font-size:22px; margin:0 0 14px; }
+  .closing p{ max-width:68ch; color:var(--ink-soft); font-size:15px; }
+  .closing ol{ padding-left:20px; max-width:68ch; }
+  .closing li{ margin-bottom:10px; font-size:15px; }
+  .closing li b{ color:var(--ink); }
+
+  footer{ margin-top:48px; font-family:var(--mono); font-size:11.5px; color:var(--muted); letter-spacing:0.02em; }
+
+  @media (max-width:600px){
+    .timeline{ padding-left:20px; }
+    .entry::before{ left:-25px; width:10px; height:10px; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow"><span class="dot"></span>美股复盘 · 2007—2026</div>
+    <h1>标普十八年牛熊录</h1>
+    <p class="dek">从1565点的次贷崩溃，到7580点的AI狂欢——标普500指数十八年间六段行情的驱动逻辑、见顶/见底信号与美联储应对全记录，与《沪指十八年牛熊录》对照阅读。</p>
+  </header>
+
+  <section class="overview">
+    <h2 class="eyebrow">全景速览</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>阶段</th><th>区间</th><th>点位</th><th>涨跌幅</th><th>时长</th><th>核心驱动</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="phase-name">① 次贷崩溃</td>
+            <td class="range">2007.10–2009.03</td>
+            <td class="range">1565→666</td>
+            <td><span class="chg down">−57%</span></td>
+            <td class="range">17个月</td>
+            <td>次贷危机 + 雷曼破产 + 全球信贷冻结</td>
+          </tr>
+          <tr>
+            <td class="phase-name">② 史上最长牛市</td>
+            <td class="range">2009.03–2020.02</td>
+            <td class="range">666→3386</td>
+            <td><span class="chg up">+400%</span></td>
+            <td class="range">134个月</td>
+            <td>QE零利率 + 页岩油革命 + 移动互联网/云计算</td>
+          </tr>
+          <tr>
+            <td class="phase-name">③ COVID闪崩</td>
+            <td class="range">2020.02–2020.03</td>
+            <td class="range">3386→2237</td>
+            <td><span class="chg down">−34%</span></td>
+            <td class="range">33天</td>
+            <td>全球封锁 + 史上最快熊市</td>
+          </tr>
+          <tr>
+            <td class="phase-name">④ 刺激狂热牛</td>
+            <td class="range">2020.03–2022.01</td>
+            <td class="range">2237→4819</td>
+            <td><span class="chg up">+115%</span></td>
+            <td class="range">22个月</td>
+            <td>零利率+无限QE + 2.2万亿财政刺激 + meme股散户狂热</td>
+          </tr>
+          <tr>
+            <td class="phase-name">⑤ 加息熊市</td>
+            <td class="range">2022.01–2022.10</td>
+            <td class="range">4819→3491</td>
+            <td><span class="chg down">−28%</span></td>
+            <td class="range">9个月</td>
+            <td>40年最高通胀 + 美联储史上最激进加息周期</td>
+          </tr>
+          <tr>
+            <td class="phase-name">⑥ AI慢牛（进行中）</td>
+            <td class="range">2022.10–2026.08</td>
+            <td class="range">3491→~6500</td>
+            <td><span class="chg up">约+86%</span></td>
+            <td class="range">约47个月</td>
+            <td>生成式AI资本开支 + "美股七巨头"抱团 + 降息预期</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="timeline">
+
+    <article class="entry down">
+      <div class="entry-head">
+        <span class="entry-num">01 / 06</span>
+        <span class="entry-dates">2007.10 — 2009.03</span>
+        <h3>次贷崩溃：大萧条以来最深的美股跌幅</h3>
+      </div>
+      <p class="tagline">从"次级抵押贷款问题可控"到雷曼倒闭引爆全球信贷冻结，用17个月抹去57%的市值。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">峰值→谷值</span><span class="v">1565 → 666</span></div>
+        <div class="stat"><span class="k">跌幅</span><span class="v down">−57%</span></div>
+        <div class="stat"><span class="k">关键事件</span><span class="v">2008.09 雷曼破产</span></div>
+        <div class="stat"><span class="k">性质</span><span class="v">大萧条以来最深回撤</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bear"><h4>崩溃机制</h4><p>2007年次级抵押贷款违约率上升，通过CDO、CDS等衍生品把风险层层放大并扩散到全球银行体系；2008年9月雷曼兄弟破产触发信贷市场彻底冻结，货币市场基金"跌破面值"，实体经济与金融体系同步休克。</p></div>
+        <div class="block gold"><h4>政策应对</h4><p>美联储将利率降至零并推出首轮QE直接购买国债和抵押贷款证券，财政部推出7000亿美元不良资产救助计划（TARP），2009年3月见底后开启美股史上最长牛市。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>这是一次源于金融体系内部杠杆（而非单纯估值泡沫）的危机，破坏力和传染性远超普通熊市——这也是2008年后全球央行集体转向"非常规货币政策"的直接起点。</div>
+    </article>
+
+    <article class="entry up">
+      <div class="entry-head">
+        <span class="entry-num">02 / 06</span>
+        <span class="entry-dates">2009.03 — 2020.02</span>
+        <h3>史上最长牛市：零利率喂养的十一年长牛</h3>
+      </div>
+      <p class="tagline">134个月、400%涨幅，期间三次让人心跳骤停的深度回调，却始终没有跌破"熊市"的-20%门槛。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">谷值→峰值</span><span class="v">666 → 3386</span></div>
+        <div class="stat"><span class="k">累计涨幅</span><span class="v up">+400%</span></div>
+        <div class="stat"><span class="k">年化收益</span><span class="v">18.27%</span></div>
+        <div class="stat"><span class="k">时长</span><span class="v">134个月</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bull"><h4>支撑逻辑</h4><p>零利率环境持续近十年，四轮QE把美联储资产负债表从不到1万亿美元推高到4.5万亿美元；页岩油革命重塑能源格局，移动互联网、云计算、社交媒体驱动科技股盈利持续超预期。</p></div>
+        <div class="block bear"><h4>三次"假摔"</h4><p>2011年欧债危机+美债评级下调，标普下跌约19%；2015-16年中国经济放缓叠加原油暴跌至26美元，下跌约15.2%；2018年四季度美联储加息+缩表预期，下跌约19.8%——三次都逼近熊市红线，但每次美联储都及时转向鸽派化解。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>这轮牛市证明了"央行看跌期权"（Fed Put）的威力——只要美联储愿意在每次深度回调时转向宽松，牛市的寿命可以远超历史均值，但代价是资产价格与实体经济基本面的联系被逐渐拉长。</div>
+    </article>
+
+    <article class="entry down">
+      <div class="entry-head">
+        <span class="entry-num">03 / 06</span>
+        <span class="entry-dates">2020.02 — 2020.03</span>
+        <h3>COVID闪崩：33天的史上最快熊市</h3>
+      </div>
+      <p class="tagline">十一年长牛在一个月内被彻底清零，这是标普500历史上速度最快、也是恢复最快的一次熊市。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">峰值→谷值</span><span class="v">3386 → 2237</span></div>
+        <div class="stat"><span class="k">跌幅</span><span class="v down">−34%</span></div>
+        <div class="stat"><span class="k">用时</span><span class="v">33天</span></div>
+        <div class="stat"><span class="k">纪录</span><span class="v">史上最快熊市</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bear"><h4>崩溃特征</h4><p>全球封锁措施导致经济活动瞬间停摆，恐慌情绪叠加流动性挤兑，连传统避险资产黄金和国债一度同步遭抛售，是极罕见的"全资产类别踩踏"。</p></div>
+        <div class="block gold"><h4>政策核弹级应对</h4><p>美联储无限量QE、直接下场购买公司债ETF、多项紧急贷款便利同步启动；国会两周内通过2.2万亿美元CARES法案直接发钱，政策响应速度和力度都创下纪录。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>危机的"深度"由基本面决定，但危机的"速度"和"恢复速度"越来越由政策响应速度决定——这轮闪崩是"用直升机撒钱抹平衰退"的第一次全面实战。</div>
+    </article>
+
+    <article class="entry up">
+      <div class="entry-head">
+        <span class="entry-num">04 / 06</span>
+        <span class="entry-dates">2020.03 — 2022.01</span>
+        <h3>刺激狂热牛：零利率、meme股与散户大军</h3>
+      </div>
+      <p class="tagline">126个交易日收复失地，创下最快熊市恢复纪录，随后在近乎免费的资金成本下演变成一场全民投机狂欢。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">谷值→峰值</span><span class="v">2237 → 4819</span></div>
+        <div class="stat"><span class="k">涨幅</span><span class="v up">+115%</span></div>
+        <div class="stat"><span class="k">收复失地用时</span><span class="v">126个交易日</span></div>
+        <div class="stat"><span class="k">峰值日期</span><span class="v">2022.01.03</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bull"><h4>驱动因素</h4><p>零利率+无限QE持续到2022年初，居民手握纾困支票和超额储蓄涌入股市和加密货币；散户经由免佣金交易APP集中炒作GameStop、AMC等"meme股"，SPAC上市潮同步泛滥。</p></div>
+        <div class="block gold"><h4>见顶信号</h4><p>2021年底通胀数据持续超预期，美联储承认通胀"不是暂时的"并释放Taper（缩减购债）信号，2022年1月3日见顶4818.62点，转折点与货币政策转向高度重合。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>这是"零成本资金"如何扭曲市场行为的教科书案例——当持有现金的机会成本趋近于零，风险定价机制会系统性失灵，投机资产（无盈利科技股、meme股、加密货币）涨幅远超基本面支撑。</div>
+    </article>
+
+    <article class="entry down">
+      <div class="entry-head">
+        <span class="entry-num">05 / 06</span>
+        <span class="entry-dates">2022.01 — 2022.10</span>
+        <h3>加息熊市：四十年最高通胀撞上最激进加息</h3>
+      </div>
+      <p class="tagline">美联储用一年内加息425个基点的速度，为上一轮刺激狂热"还债"，成长股和债券同步遭遇罕见的双杀。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">峰值→谷值</span><span class="v">4819 → 3491</span></div>
+        <div class="stat"><span class="k">跌幅</span><span class="v down">−28%</span></div>
+        <div class="stat"><span class="k">CPI峰值</span><span class="v">9.1%（1981年来最高）</span></div>
+        <div class="stat"><span class="k">加息节奏</span><span class="v">多次单次75个基点</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bear"><h4>下跌逻辑</h4><p>俄乌冲突推高能源和粮食价格，叠加疫情后供应链紊乱，通胀失控倒逼美联储以四十年最快速度加息（联邦基金利率从接近零升至4.25%-4.5%），无盈利成长股和长久期科技股估值被大幅重新定价，股债罕见同步下跌。</p></div>
+        <div class="block gold"><h4>见底信号</h4><p>2022年10月通胀数据边际回落，市场开始交易"加息接近尾声"预期，10月13日探底3491.58点后企稳，为后续AI驱动的新一轮牛市埋下起点。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>相比2008年和2020年，这次下跌完全是"政策主动刺破泡沫"而非外部冲击——28%的跌幅远小于历史平均熊市，说明只要不涉及系统性金融机构破产，单纯的估值消化型熊市，破坏力和持续时间都相对可控。</div>
+    </article>
+
+    <article class="entry up">
+      <div class="entry-head">
+        <span class="entry-num">06 / 06</span>
+        <span class="entry-dates">2022.10 — 2026.08（进行中）</span>
+        <h3>AI慢牛：七巨头抱团与估值天花板的博弈</h3>
+      </div>
+      <p class="tagline">连续三年双位数涨幅，标普500年内23次创历史新高，但涨幅越来越集中在少数AI巨头身上——这是本轮牛市最鲜明的特征，也是最大的隐忧。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">谷值→现价</span><span class="v">3491 → ~6500</span></div>
+        <div class="stat"><span class="k">2023/2024/2025涨幅</span><span class="v up">+24% / +23% / +16%</span></div>
+        <div class="stat"><span class="k">英伟达2024涨幅</span><span class="v up">+171%</span></div>
+        <div class="stat"><span class="k">前十大权重占比</span><span class="v">约40%</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bull"><h4>行情结构</h4><p>2023年"美股七巨头"贡献了标普500约84%的涨幅，2024年英伟达一只股票贡献了指数涨幅的22%；ChatGPT引爆的生成式AI叙事推动云计算、芯片、数据中心资本开支连续三年爆发式增长，2026年上半年仅四家科技巨头的数据中心资本开支就合计3030亿美元。</p></div>
+        <div class="block bear"><h4>2025年4月的"解放日"闪跌</h4><p>特朗普政府突然宣布大规模对等关税，标普500在7个交易日内暴跌超12%（从5671点跌至5074点，盘中一度探至4982点），是这轮牛市中最剧烈的单次冲击；随后关税暂缓+谈判信号使市场在32天内完全收复失地，成为本轮牛市"高波动但快速修复"特征的典型样本。</p></div>
+        <div class="block gold"><h4>当前风险位置</h4><p>2026年以来指数继续刷新纪录（2月站上6129点，4月突破7000点，5月见7580点），但估值指标同步创历史高位（Shiller CAPE约41倍，巴菲特指标约238%），前十大科技股集中度已超过2000年互联网泡沫峰值——这正是此前聊到的巴菲特现金囤积、达利欧"大债务周期"警告的市场背景。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>这轮牛市和2009-2020年那轮最大的不同是"广度更窄、速度更快、对少数几家公司资本开支能否兑现的依赖更高"——一旦AI资本开支的回报预期被证伪，回撤可能不再是温和的季度调整，而是集中反映在指数权重股上的剧烈重估。</div>
+    </article>
+
+  </div>
+
+  <section class="closing">
+    <h2>与A股对照：两种"熨平周期"的方式</h2>
+    <ol>
+      <li><b>美股靠"央行看跌期权"熨平，A股靠"国家队+汇金"熨平。</b>2011、2015-16、2018三次美股深度回调都在触及熊市红线前被美联储转向拯救；A股则更多依赖证金、汇金等国家队资金直接入场买股票——机制不同，但本质都是用流动性推迟出清。</li>
+      <li><b>美股的牛熊转换更依赖"政策主动刺破"，A股更依赖"信心自然崩塌"。</b>2022年美股熊市是美联储主动加息刺破泡沫，而A股历轮熊市（2015配资去杠杆除外）更多是地产、监管、外部冲击等基本面因素引发的信心塌陷——这也是为什么美股熊市普遍更短（9-17个月），而A股熊市普遍更长（3-5年）。</li>
+      <li><b>两个市场目前都站在"估值高位+集中度高位"的十字路口。</b>标普500前十大权重占比40%（超互联网泡沫峰值），A股则刚从三年熊市的低估值起点开始"慢牛"修复——同一时间点，两个市场处在这轮全球流动性周期的不同阶段，这也是本轮"跷跷板效应"（外资在两地资产间轮动）值得持续跟踪的原因。</li>
+    </ol>
+  </section>
+
+  <footer>数据来源：标普道琼斯指数公开数据、美联储公开声明及公开财经媒体报道整理 · 点位与涨跌幅为区间近似值，已在正文标注</footer>
+
+</div>
