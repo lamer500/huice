@@ -1,0 +1,614 @@
+<title>沪指十八年牛熊录</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  :root{
+    --paper:#efeae0;
+    --paper-raised:#f6f2e9;
+    --ink:#221e1a;
+    --ink-soft:#544c40;
+    --muted:#8a8071;
+    --rule:#d6cbb2;
+    --rule-strong:#b9ab88;
+    --bull:#a9311f;
+    --bull-soft:#f2ded5;
+    --bear:#3c6152;
+    --bear-soft:#dde7e0;
+    --gold:#8f6a2e;
+    --gold-soft:#ece0c4;
+    --shadow: 0 1px 0 rgba(34,30,26,0.06);
+    --serif: "Noto Serif SC", "Songti SC", "STSong", serif;
+    --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#17181a;
+      --paper-raised:#1e2022;
+      --ink:#e9e3d6;
+      --ink-soft:#bcb3a0;
+      --muted:#867d6d;
+      --rule:#33352f;
+      --rule-strong:#4a4c42;
+      --bull:#e2634c;
+      --bull-soft:#3a231d;
+      --bear:#71a68e;
+      --bear-soft:#1f2c26;
+      --gold:#cba653;
+      --gold-soft:#332c1a;
+      --shadow: 0 1px 0 rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#17181a;
+    --paper-raised:#1e2022;
+    --ink:#e9e3d6;
+    --ink-soft:#bcb3a0;
+    --muted:#867d6d;
+    --rule:#33352f;
+    --rule-strong:#4a4c42;
+    --bull:#e2634c;
+    --bull-soft:#3a231d;
+    --bear:#71a68e;
+    --bear-soft:#1f2c26;
+    --gold:#cba653;
+    --gold-soft:#332c1a;
+    --shadow: 0 1px 0 rgba(0,0,0,0.4);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--gold-soft); }
+
+  .page{
+    max-width:920px;
+    margin:0 auto;
+    padding:clamp(28px,5vw,72px) clamp(18px,4vw,32px) 100px;
+  }
+
+  header.masthead{
+    border-bottom:2px solid var(--ink);
+    padding-bottom:22px;
+    margin-bottom:36px;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-bottom:14px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--bull);}
+  h1{
+    font-family:var(--serif);
+    font-weight:900;
+    font-size:clamp(28px,4.4vw,42px);
+    margin:0 0 10px;
+    text-wrap:balance;
+    letter-spacing:0.01em;
+  }
+  .dek{
+    font-size:16px;
+    color:var(--ink-soft);
+    max-width:62ch;
+    margin:0;
+  }
+
+  /* overview table */
+  .overview{
+    margin:0 0 52px;
+  }
+  .overview h2{ font-size:13px; }
+  .table-wrap{
+    overflow-x:auto;
+    border:1px solid var(--rule-strong);
+    background:var(--paper-raised);
+    box-shadow:var(--shadow);
+  }
+  table{
+    border-collapse:collapse;
+    width:100%;
+    min-width:760px;
+    font-size:14px;
+  }
+  thead th{
+    font-family:var(--mono);
+    font-weight:600;
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    text-align:left;
+    padding:12px 14px;
+    border-bottom:1px solid var(--rule-strong);
+    white-space:nowrap;
+  }
+  tbody td{
+    padding:12px 14px;
+    border-bottom:1px solid var(--rule);
+    vertical-align:top;
+  }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background:rgba(0,0,0,0.02); }
+  td.phase-name{ font-weight:600; white-space:nowrap; }
+  td.range{ font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink-soft); }
+  .chg{
+    font-family:var(--mono);
+    font-weight:700;
+    font-variant-numeric:tabular-nums;
+    padding:2px 7px;
+    border-radius:3px;
+    white-space:nowrap;
+    display:inline-block;
+  }
+  .chg.up{ color:var(--bull); background:var(--bull-soft); }
+  .chg.down{ color:var(--bear); background:var(--bear-soft); }
+
+  /* timeline */
+  .timeline{
+    position:relative;
+    padding-left:28px;
+    border-left:2px solid var(--rule-strong);
+  }
+  .entry{
+    position:relative;
+    padding-bottom:56px;
+  }
+  .entry:last-child{ padding-bottom:0; }
+  .entry::before{
+    content:"";
+    position:absolute;
+    left:-34px;
+    top:6px;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:var(--paper);
+    border:2.5px solid var(--dot-color, var(--ink));
+  }
+  .entry.up::before{ --dot-color: var(--bull); }
+  .entry.down::before{ --dot-color: var(--bear); }
+  .entry.flat::before{ --dot-color: var(--gold); }
+
+  .entry-head{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    gap:10px 14px;
+    margin-bottom:6px;
+  }
+  .entry-num{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+    letter-spacing:0.06em;
+  }
+  .entry-dates{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+  .entry h3{
+    font-family:var(--serif);
+    font-size:clamp(20px,2.6vw,26px);
+    font-weight:700;
+    margin:2px 0 4px;
+    text-wrap:balance;
+    flex-basis:100%;
+  }
+  .entry .tagline{
+    color:var(--ink-soft);
+    font-size:15px;
+    margin:0 0 18px;
+    max-width:64ch;
+  }
+
+  .stat-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:1px;
+    background:var(--rule);
+    border:1px solid var(--rule);
+    margin-bottom:20px;
+  }
+  .stat{
+    background:var(--paper-raised);
+    padding:12px 14px;
+  }
+  .stat .k{
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:block;
+    margin-bottom:5px;
+  }
+  .stat .v{
+    font-family:var(--mono);
+    font-size:16px;
+    font-weight:600;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink);
+  }
+  .stat .v.up{ color:var(--bull); }
+  .stat .v.down{ color:var(--bear); }
+
+  .entry-body{
+    display:grid;
+    gap:14px;
+  }
+  .block{
+    padding-left:14px;
+    border-left:3px solid var(--rule-strong);
+  }
+  .block.gold{ border-left-color:var(--gold); }
+  .block.bull{ border-left-color:var(--bull); }
+  .block.bear{ border-left-color:var(--bear); }
+  .block h4{
+    font-family:var(--sans);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 5px;
+  }
+  .block p{
+    margin:0;
+    font-size:15px;
+    color:var(--ink);
+    max-width:66ch;
+  }
+  .block p + p{ margin-top:8px; }
+
+  .lesson{
+    margin-top:16px;
+    background:var(--gold-soft);
+    border:1px dashed var(--rule-strong);
+    padding:14px 16px;
+    font-size:14.5px;
+    color:var(--ink-soft);
+  }
+  .lesson b{ color:var(--ink); font-family:var(--serif); }
+
+  .closing{
+    margin-top:60px;
+    padding-top:28px;
+    border-top:2px solid var(--ink);
+  }
+  .closing h2{
+    font-family:var(--serif);
+    font-size:22px;
+    margin:0 0 14px;
+  }
+  .closing p{ max-width:68ch; color:var(--ink-soft); font-size:15px; }
+  .closing ol{ padding-left:20px; max-width:68ch; }
+  .closing li{ margin-bottom:10px; font-size:15px; }
+  .closing li b{ color:var(--ink); }
+
+  footer{
+    margin-top:48px;
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--muted);
+    letter-spacing:0.02em;
+  }
+
+  @media (max-width:600px){
+    .timeline{ padding-left:20px; }
+    .entry::before{ left:-25px; width:10px; height:10px; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow"><span class="dot"></span>A股复盘 · 2007—2026</div>
+    <h1>沪指十八年牛熊录</h1>
+    <p class="dek">从6124点的全民疯狂，到924新政后的慢牛——上证指数十八年间九段行情的驱动逻辑、见顶/见底信号与政策应对全记录。</p>
+  </header>
+
+  <section class="overview">
+    <h2 class="eyebrow">全景速览</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>阶段</th>
+            <th>区间</th>
+            <th>点位</th>
+            <th>涨跌幅</th>
+            <th>时长</th>
+            <th>核心驱动</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="phase-name">① 泡沫破裂</td>
+            <td class="range">2007.10–2008.10</td>
+            <td class="range">6124→1664</td>
+            <td><span class="chg down">−73%</span></td>
+            <td class="range">12个月</td>
+            <td>全球金融危机 + 全民炒股泡沫出清</td>
+          </tr>
+          <tr>
+            <td class="phase-name">② 四万亿反弹</td>
+            <td class="range">2008.10–2009.08</td>
+            <td class="range">1664→3478</td>
+            <td><span class="chg up">+109%</span></td>
+            <td class="range">10个月</td>
+            <td>四万亿投资计划 + 天量信贷</td>
+          </tr>
+          <tr>
+            <td class="phase-name">③ 长熊消化</td>
+            <td class="range">2009.08–2014.06</td>
+            <td class="range">3478→~2000</td>
+            <td><span class="chg down">−43%</span></td>
+            <td class="range">约5年</td>
+            <td>刺激后遗症、钱荒、经济换挡</td>
+          </tr>
+          <tr>
+            <td class="phase-name">④ 杠杆牛市</td>
+            <td class="range">2014.06–2015.06</td>
+            <td class="range">~2000→5178</td>
+            <td><span class="chg up">+159%</span></td>
+            <td class="range">12个月</td>
+            <td>两融+场外配资 5万亿杠杆、"改革牛"叙事</td>
+          </tr>
+          <tr>
+            <td class="phase-name">⑤ 股灾熔断</td>
+            <td class="range">2015.06–2016.01</td>
+            <td class="range">5178→2638</td>
+            <td><span class="chg down">−49%</span></td>
+            <td class="range">7个月</td>
+            <td>监管清查配资引发强制平仓 + 熔断机制踩踏</td>
+          </tr>
+          <tr>
+            <td class="phase-name">⑥ 贸易战杀跌</td>
+            <td class="range">2018.01–2019.01</td>
+            <td class="range">3587→2440</td>
+            <td><span class="chg down">−32%</span></td>
+            <td class="range">12个月</td>
+            <td>中美贸易战 + 去杠杆 + 商誉减值集中爆雷</td>
+          </tr>
+          <tr>
+            <td class="phase-name">⑦ 抱团结构牛</td>
+            <td class="range">2019.01–2021.02</td>
+            <td class="range">2440→~3730</td>
+            <td><span class="chg up">+53%（指数）</span></td>
+            <td class="range">约25个月</td>
+            <td>茅指数/宁组合抱团、外资北上、疫情V型修复</td>
+          </tr>
+          <tr>
+            <td class="phase-name">⑧ 三年长熊</td>
+            <td class="range">2021.02–2024.02</td>
+            <td class="range">~3730→2635</td>
+            <td><span class="chg down">−29%（沪指）</span></td>
+            <td class="range">约3年</td>
+            <td>地产危机、中概股/平台监管、外资撤离</td>
+          </tr>
+          <tr>
+            <td class="phase-name">⑨ 924慢牛</td>
+            <td class="range">2024.09–2026.08 (进行中)</td>
+            <td class="range">2635→~3950</td>
+            <td><span class="chg up">+50%</span></td>
+            <td class="range">约23个月</td>
+            <td>一揽子政策+汇金托底+险资社保长钱入场</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="timeline">
+
+    <article class="entry down">
+      <div class="entry-head">
+        <span class="entry-num">01 / 09</span>
+        <span class="entry-dates">2007.10 — 2008.10</span>
+        <h3>泡沫破裂：从6124点到1664点</h3>
+      </div>
+      <p class="tagline">2005年以来513%涨幅的全民牛市，在金融危机冲击下用12个月吐光两年半的涨幅。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">峰值→谷值</span><span class="v">6124 → 1664</span></div>
+        <div class="stat"><span class="k">跌幅</span><span class="v down">−73%</span></div>
+        <div class="stat"><span class="k">峰值市盈率</span><span class="v">约60–71倍</span></div>
+        <div class="stat"><span class="k">开户热度</span><span class="v">全年新增3829万户</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bull"><h4>上涨阶段做对了什么</h4><p>股权分置改革解决了非流通股问题，叠加人民币升值预期、居民储蓓大规模入市，2005年6月至2007年10月累计涨幅513%，近500家公司区间涨幅超十倍，A股账户数在2007年9月突破1亿户，"全民炒股"成为社会现象。</p></div>
+        <div class="block bear"><h4>崩溃的触发点</h4><p>2007年10月见顶时整体市盈率已冲到60-70倍区间，估值透支了未来数年的盈利增长。次贷危机从美国蔓延为全球金融危机后，外部流动性骤然收紧，叠加"大小非"解禁抛压，泡沫在没有杠杆强平的情况下也自然出清。</p></div>
+        <div class="block gold"><h4>政策应对</h4><p>2008年9月起连续降准降息、印花税单边征收改革，但真正的转折点是11月推出的四万亿投资计划——市场底与政策底在1664点附近重合。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>史上最纯粹的一轮估值泡沫——没有场外配资、没有衍生品杠杆，仅凭居民资金和情绪驱动，也足以制造73%的跌幅，说明高估值本身就是最大的系统性风险。</div>
+    </article>
+
+    <article class="entry up">
+      <div class="entry-head">
+        <span class="entry-num">02 / 09</span>
+        <span class="entry-dates">2008.10 — 2009.08</span>
+        <h3>四万亿反弹：政策驱动的V型修复</h3>
+      </div>
+      <p class="tagline">史上力度最大的一揽子刺激，在10个月内把指数拉高109%，也埋下了此后五年产能过剩的伏笔。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">谷值→峰值</span><span class="v">1664 → 3478</span></div>
+        <div class="stat"><span class="k">涨幅</span><span class="v up">+109%</span></div>
+        <div class="stat"><span class="k">刺激规模</span><span class="v">4万亿元</span></div>
+        <div class="stat"><span class="k">时长</span><span class="v">10个月</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block gold"><h4>政策机制</h4><p>2008年11月推出四万亿投资计划，配合天量信贷投放（2009年新增贷款近10万亿），资金大量涌入基建、地产链，形成典型的"政策底先于市场底"教科书案例。</p></div>
+        <div class="block bull"><h4>行情特征</h4><p>周期股、地产股、券商股领涨，是一轮纯粹由流动性和政策预期驱动的估值修复，而非企业盈利的real增长驱动。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>这是A股历史上"政策底"最经典的样本，也是后续每一轮熊市底部，市场都会本能地等待"下一个四万亿"的心理锚点由来。</div>
+    </article>
+
+    <article class="entry down">
+      <div class="entry-head">
+        <span class="entry-num">03 / 09</span>
+        <span class="entry-dates">2009.08 — 2014.06</span>
+        <h3>长熊消化：刺激后遗症的五年出清</h3>
+      </div>
+      <p class="tagline">没有暴跌，只有旷日持久的阴跌与箱体震荡——刺激政策的产能过剩后遗症用了近五年才慢慢消化。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">峰值→谷值</span><span class="v">3478 → 1849</span></div>
+        <div class="stat"><span class="k">时长</span><span class="v">约5年</span></div>
+        <div class="stat"><span class="k">2013年事件</span><span class="v">"钱荒"</span></div>
+        <div class="stat"><span class="k">行情性质</span><span class="v">慢熊/箱体</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bear"><h4>拖累因素</h4><p>四万亿刺激留下的钢铁、水泥、光伏等行业产能过剩问题逐步暴露，地方政府融资平台债务快速膨胀；2013年6月银行间市场爆发"钱荒"，隔夜拆借利率一度冲上30%，是影子银行扩张与监管收紧碰撞的缩影。</p></div>
+        <div class="block gold"><h4>转折铺垫</h4><p>2014年起利率市场化改革提速、"沪港通"启动预期升温，叠加央行定向宽松，为下一轮杠杆牛市埋下了流动性伏笔。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>比起暴跌，这种"温水煮青蛙"式的五年慢熊对投资者信心的消耗更彻底，也是这一轮牛市结束后散户大规模离场、成交量持续萎缩的直接原因。</div>
+    </article>
+
+    <article class="entry up">
+      <div class="entry-head">
+        <span class="entry-num">04 / 09</span>
+        <span class="entry-dates">2014.06 — 2015.06</span>
+        <h3>杠杆牛市："改革牛"与5万亿配资</h3>
+      </div>
+      <p class="tagline">159%的涨幅背后，是两融余额一年翻倍、创业板市盈率冲到140倍的疯狂——这是A股历史上杠杆化程度最高的一轮牛市。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">谷值→峰值</span><span class="v">~2000 → 5178</span></div>
+        <div class="stat"><span class="k">涨幅</span><span class="v up">+159%</span></div>
+        <div class="stat"><span class="k">场外杠杆峰值</span><span class="v">约5万亿元</span></div>
+        <div class="stat"><span class="k">创业板峰值PE</span><span class="v">约140倍</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bull"><h4>杠杆结构</h4><p>两融余额从年初约1万亿元冲高至2015年6月18日的2.3万亿元峰值；叠加伞形信托、收益互换、民间配资，场外杠杆总规模约5万亿元，占当时A股总市值/自由流通市值的7.2%/19.6%。</p></div>
+        <div class="block gold"><h4>叙事驱动</h4><p>"改革牛""国家牛市"的官方媒体表态、注册制预期、"互联网+"概念炒作，共同构成了这轮行情的舆论燃料，中小盘、创业板涨幅远超主板。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>这是判断"这轮上涨是否健康"最重要的历史参照系——凡是伴随场外配资规模数月内成倍扩张、题材股估值脱离盈利支撑的上涨，都值得高度警惕。</div>
+    </article>
+
+    <article class="entry down">
+      <div class="entry-head">
+        <span class="entry-num">05 / 09</span>
+        <span class="entry-dates">2015.06 — 2016.01</span>
+        <h3>股灾熔断：去杠杆引发的强制平仓踩踏</h3>
+      </div>
+      <p class="tagline">监管一纸清查配资的通知，触发了A股历史上最剧烈的连环强平，四个月内蒸发近一半市值。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">峰值→谷值</span><span class="v">5178 → 2638</span></div>
+        <div class="stat"><span class="k">跌幅</span><span class="v down">−49%</span></div>
+        <div class="stat"><span class="k">触发事件</span><span class="v">2015.06.13清查配资</span></div>
+        <div class="stat"><span class="k">后续事件</span><span class="v">2016.01熔断机制</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bear"><h4>崩溃机制</h4><p>2015年6月13日证监会发布清理场外配资的通知，杠杆资金被强制平仓，形成"下跌→触及平仓线→被强平→加剧下跌"的死亡螺旋，8月26日一度探至2850点；2016年初新推出的熔断机制在流动性枯竭时反而加速了恐慌，实施4天后即被叫停。</p></div>
+        <div class="block gold"><h4>救市应对</h4><p>证金公司、中央汇金联合券商、公募基金组建"国家队"直接入市买入蓝筹股，暂停IPO，限制大股东减持，是"国家队救市"这一常态化工具首次大规模登场。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>杠杆牛的下跌速度和幅度，永远比纯情绪牛市更剧烈——这也是2024年"924行情"官方反复强调"机构主导、严控场外配资"的历史原因。</div>
+    </article>
+
+    <article class="entry down">
+      <div class="entry-head">
+        <span class="entry-num">06 / 09</span>
+        <span class="entry-dates">2018.01 — 2019.01</span>
+        <h3>贸易战杀跌：外部冲击叠加商誉爆雷</h3>
+      </div>
+      <p class="tagline">中美贸易摩擦升级撞上前几年并购潮积累的商誉减值地雷，两只黑天鹅在同一年集中引爆。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">峰值→谷值</span><span class="v">3587 → 2440</span></div>
+        <div class="stat"><span class="k">跌幅</span><span class="v down">−32%</span></div>
+        <div class="stat"><span class="k">外部冲击</span><span class="v">中美关税战开打</span></div>
+        <div class="stat"><span class="k">内部冲击</span><span class="v">商誉减值集中计提</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bear"><h4>双重挤压</h4><p>2018年中美互相加征关税，人民币汇率承压；同时2014-2016年并购重组潮中积累的高商誉在业绩承诺到期后集中"洗澡式"减值，中小创个股大面积闪崩，股权质押平仓风险进一步放大跌幅。</p></div>
+        <div class="block gold"><h4>见底信号</h4><p>2018年10月起，监管层密集出台纾困政策：地方政府设立纾困基金化解股权质押风险、央行降准释放流动性，2019年1月见底后迎来2019-2021年的结构性修复。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>外部地缘冲击往往只是导火索，真正决定跌幅深浅的是国内金融体系自身积累的隐患（这一次是商誉与股权质押），这个规律在此后历轮下跌中反复出现。</div>
+    </article>
+
+    <article class="entry up">
+      <div class="entry-head">
+        <span class="entry-num">07 / 09</span>
+        <span class="entry-dates">2019.01 — 2021.02</span>
+        <h3>抱团结构牛：茅指数、宁组合与"核心资产"信仰</h3>
+      </div>
+      <p class="tagline">指数涨幅并不惊人，但机构抱团的消费、医药、新能源龙头股涨幅是指数的数倍——这是一轮"二八分化"的结构性牛市。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">谷值→峰值</span><span class="v">2440 → ~3730</span></div>
+        <div class="stat"><span class="k">茅台批价</span><span class="v">1700→2700元</span></div>
+        <div class="stat"><span class="k">食品饮料板块</span><span class="v">累计涨超3倍</span></div>
+        <div class="stat"><span class="k">时长</span><span class="v">约25个月</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bull"><h4>抱团逻辑</h4><p>经济转型背景下，公募基金集中押注消费（茅指数）、新能源/科技（宁组合）等"确定性最强"的核心资产赛道，外资北上资金持续净流入放大了这一趋势，2020年疫情后的V型修复进一步强化了"茅指数永远涨"的市场共识。</p></div>
+        <div class="block bear"><h4>瓦解过程</h4><p>2020年末"核心资产只涨不跌"成为市场高度一致的共识，本身就是见顶最强的信号；估值透支叠加流动性预期边际收紧，2021年春节后抱团股开始瓦解，茅台从2600元附近跌至1300元一线，跌幅接近50%，资金从高位核心资产大规模轮动到低位周期股。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>结构性牛市里，"指数没怎么跌"不代表风险不大——当某类资产的上涨逻辑变成全市场无异议的共识时，往往正是集中减持的开始。</div>
+    </article>
+
+    <article class="entry down">
+      <div class="entry-head">
+        <span class="entry-num">08 / 09</span>
+        <span class="entry-dates">2021.02 — 2024.02</span>
+        <h3>三年长熊：地产、监管与信心的同步塌陷</h3>
+      </div>
+      <p class="tagline">没有单一的暴跌日，却是十八年里持续时间最长的熊市——三条战线同时失守，把市场情绪磨到了历史冰点。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">峰值→谷值</span><span class="v">~3730 → 2635</span></div>
+        <div class="stat"><span class="k">中证500最大回撤</span><span class="v">约31.7%</span></div>
+        <div class="stat"><span class="k">时长</span><span class="v">约3年</span></div>
+        <div class="stat"><span class="k">核心拖累</span><span class="v">地产+监管+外资撤离</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block bear"><h4>三重压力</h4><p>恒大等房企债务危机全面爆发，拖累居民资产负债表和地方财政；平台经济反垄断、教育"双减"等监管政策集中落地，压制了互联网和教育板块估值；2022-2023年海外加息周期叠加地缘冲突，外资阶段性净流出。</p></div>
+        <div class="block gold"><h4>政策探底</h4><p>期间多次"国家队"入场、印花税减半等托底动作均未能扭转趋势，直到2024年9月宏观政策转向才真正改变市场预期——这也说明单纯的资金救市，如果不解决地产和信心的根本问题，效果有限且短暂。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>这轮熊市把此前所有牛市留下的估值泡沫、抱团筹码、外资信仰全部出清，也正是这种"彻底出清"，为后续924行情的低估值起点提供了基础。</div>
+    </article>
+
+    <article class="entry up">
+      <div class="entry-head">
+        <span class="entry-num">09 / 09</span>
+        <span class="entry-dates">2024.09 — 2026.08（进行中）</span>
+        <h3>924慢牛：政策底、汇金托底与十年首破4000点</h3>
+      </div>
+      <p class="tagline">"一行一局一会"新政十天内把指数拉高27%，随后转入更克制、更依赖盈利验证的"慢牛"节奏——这是本轮行情与2015年最本质的区别。</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="k">起点→现价</span><span class="v">2635 → ~3950</span></div>
+        <div class="stat"><span class="k">涨幅</span><span class="v up">约+50%</span></div>
+        <div class="stat"><span class="k">关键节点</span><span class="v">2025.10 十年首破4000点</span></div>
+        <div class="stat"><span class="k">当前阶段</span><span class="v">景气验证期</span></div>
+      </div>
+      <div class="entry-body">
+        <div class="block gold"><h4>启动机制</h4><p>2024年9月24日央行、金融监管总局、证监会联合推出一揽子宽松政策，9月26日政治局会议表态超预期，确立"政策底"，指数10个交易日内从2735点冲高至3489点。</p></div>
+        <div class="block bull"><h4>推进节奏</h4><p>行情依次经历"价值重估期"（低估值修复）、"资金流入期"（汇金、险资、社保等长线资金常态化入场）、以及2025年底以来的"景气验证期"——涨幅明显放缓，企业盈利改善逐步取代估值扩张成为主要驱动力，2025年10月十年来首次站上4000点。</p></div>
+        <div class="block bear"><h4>潜在风险</h4><p>正如前面聊到的，这轮行情的可持续性最终取决于"反内卷"去产能和房地产企稳能否兑现为真实的企业盈利增长；如果只靠机构资金维持指数不跌，而基本面跟不上，慢牛随时可能退化为又一轮"资金空转"。</p></div>
+      </div>
+      <div class="lesson"><b>启示：</b>本轮行情官方刻意控制杠杆、强调机构主导，正是对2015年教训的直接回应——但估值修复终有天花板，能否走出"第三轮长牛"，最终还是要看通缩能否被真正打破。</div>
+    </article>
+
+  </div>
+
+  <section class="closing">
+    <h2>贯穿九轮周期的三条规律</h2>
+    <ol>
+      <li><b>牛市的终点几乎都写在起点的杠杆里。</b>2007年（无杠杆纯情绪）跌73%，2015年（5万亿场外杠杆）跌49%但速度快得多——杠杆决定的不是会不会跌，而是跌多快、多深。</li>
+      <li><b>每一轮熊市的低点，都是上一轮牛市遗留问题的总清算。</b>2008年清算的是估值泡沫，2016年清算的是配资杠杆，2024年之前的三年长熊清算的是地产、监管和外资信仰——不出清完，下一轮牛市就起不来。</li>
+      <li><b>政策底领先市场底，几乎是A股独有的规律。</b>1664点、2635点两次历史大底，都是在政策转向后的1-2个月内确认的，这也是为什么"国家队""汇金"这些词在A股语境里，是比海外市场更具体、更常态化的存在。</li>
+    </ol>
+  </section>
+
+  <footer>数据来源：上交所公开行情、国家统计局、证监会公开表态及公开财经媒体报道整理 · 点位与涨跌幅为区间近似值，已在正文标注</footer>
+
+</div>
