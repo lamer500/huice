@@ -114,7 +114,7 @@
 
   /* circular financing */
   .risk-box{ border:1px solid var(--rule-strong); background:var(--paper-raised); padding:22px 24px; }
-  .risk-box .flow{ font-family:var(--mono); font-size:14px; color:var(--ink-soft); background:var(--paper); border:1px dashed var(--rule-strong); padding:14px 16px; margin:14px 0; overflow-x:auto; white-space:pre; }
+  .risk-box .flow{ font-family:var(--mono); font-size:14px; color:var(--ink-soft); background:var(--paper); border:1px dashed var(--rule-strong); padding:14px 16px; margin:14px 0; overflow-x:auto; white-space:pre-wrap; }
   .risk-box p{ font-size:15px; margin:0 0 10px; max-width:72ch; }
   .risk-box p:last-child{ margin-bottom:0; }
   .risk-box .callout{ color:var(--bear); font-weight:700; }
@@ -135,7 +135,7 @@
   <header class="masthead">
     <div class="eyebrow"><span class="dot"></span>七巨头体检 · 2026.08</div>
     <h1>七巨头体检报告</h1>
-    <p class="dek">2023-2025年扛起标普和纳指几乎全部涨幅的"美股七巨头"，2026年画风突变：整体跑输大盘，内部分化成三个明显不同的阵营。这是一份体检报告，不是复盘史——重点拆解每家公司的估值贵不贵、利润增长有多少水分、以及资本开支正在多快地吃掉现金流。</p>
+    <p class="dek">2023-2025年扛起标普和纳指几乎全部涨幅的"美股七巨头"，2026年画风突变：整体跑输大盘，内部分化成三个明显不同的阵营。这是一份体检报告。</p>
   </header>
 
   <div class="group-strip">
@@ -194,7 +194,7 @@
           <div><span class="k">2026年资本开支指引</span><span class="v">1250-1450亿美元</span></div>
           <div><span class="k">增速定位</span><span class="v">Tier 1</span></div>
         </div>
-        <p class="thesis"><b>现状：</b>广告业务被AI推荐算法明显提振，是七巨头里少数"AI投入→本业变现"路径最清晰的一家，扎克伯格本人也公开提示了产能过剩的可能性。</p>
+        <p class="thesis"><b>现状：</b>广告业务被AI推荐算法明显提振，是七巨头里少数"AI投入→本业变现"路径最清晰的一家。</p>
       </div>
 
       <div class="card" style="--tc:var(--t2)">
@@ -254,7 +254,7 @@
           <div><span class="k">2026年至今涨幅</span><span class="v down">七巨头最差</span></div>
           <div><span class="k">主营业务盈利</span><span class="v down">TTM口径转亏</span></div>
         </div>
-        <p class="thesis"><b>现状：</b>核心电动车业务增长停滞、盈利转亏，估值支撑几乎完全转移到自动驾驶/机器人叙事上，已被市场明确移出"AI核心资产"梯队。</p>
+        <p class="thesis"><b>现状：</b>核心电动车业务增长停滞、盈利转亏，估值支撑几乎完全转移到自动驾驶/机器人叙事上，已被市场明确移出"AI核心资产"。</p>
       </div>
 
     </div>
@@ -262,26 +262,26 @@
 
   <section>
     <h2 class="section-title">估值 vs 净利润：拆开看增长的"含金量"</h2>
-    <p class="section-note">Mag7整体前瞻市盈率约28倍，只比标普500（约23.5倍）贵不到20%，从PEG（估值/成长性）口径看甚至比"其余493家"更便宜——但这个平均数掩盖了组内三种完全不同的"利润故事"：真实经营性增长、被一次性股权浮盈掺水的增长、以及和当期盈利完全脱节的估值。</p>
+    <p class="section-note">Mag7整体前瞻市盈率约28倍，只比标普500（约23.5倍）贵不到20%。</p>
 
     <div class="table-wrap">
       <table>
         <thead><tr><th>股票</th><th>静态PE</th><th>前瞻PE</th><th>净利润/经营利润增速</th><th>增长含金量</th><th>一句话解读</th></tr></thead>
         <tbody>
           <tr>
-            <td class="tk">NVDA</td><td class="num">≈26.4x</td><td class="num">≈17.8-24.5x</td><td class="num">经营利润同比&gt;3倍</td>
+            <td class="tk">NVDA</td><td class="num">≈26.4x</td><td class="num">≈17.8-24.5x</td><td class="num">经营利润同比>3倍</td>
             <td><span class="quality real">真实增长</span></td>
             <td>PEG仅0.38，全组唯一被市场认定为"便宜"的公司——股价涨得快，但利润涨得更快，估值反而在被动消化。</td>
           </tr>
           <tr>
             <td class="tk">AMZN</td><td class="num">≈35x</td><td class="num">≈30x</td><td class="num">经营利润+43%（AWS+64%）</td>
             <td><span class="quality real">真实增长</span></td>
-            <td>GAAP净利润被约534亿美元Anthropic股权浮盈严重推高，但剔除后经营利润+43%、AWS利润率扩张650个基点，成色是组内最实的之一。</td>
+            <td>GAAP净利润被约534亿美元Anthropic股权浮盈严重推高，但剔除后经营利润+43%、AWS利润率扩张，成色是组内最实的之一。</td>
           </tr>
           <tr>
             <td class="tk">MSFT</td><td class="num">≈27x</td><td class="num">≈24x</td><td class="num">净利润+31%</td>
             <td><span class="quality real">真实增长</span></td>
-            <td>一年前投资者付37倍市盈率，如今只需27倍——因为净利润(+31%)增速持续跑赢股价涨幅，罕见的"越涨越便宜"。</td>
+            <td>一年前投资者付37倍市盈率，如今只需27倍——因为净利润增速持续跑赢股价涨幅。</td>
           </tr>
           <tr>
             <td class="tk">AAPL</td><td class="num">≈35x</td><td class="num">≈30x</td><td class="num">净利润+27%</td>
@@ -291,17 +291,17 @@
           <tr>
             <td class="tk">GOOGL</td><td class="num">≈17.4x</td><td class="num">≈20x</td><td class="num">净利润+298%（经营+30%）</td>
             <td><span class="quality mixed">掺水增长</span></td>
-            <td>表观市盈率全组最低，但Q2净利润的298%增幅里近九成来自Anthropic等股权的账面浮盈，剔除后经营利润增速约30%——依然稳健，但绝不是表面数字暗示的"提速"。</td>
+            <td>表观市盈率全组最低，但净利润的298%增幅里近九成来自股权浮盈，剔除后经营利润增速约30%——依然稳健。</td>
           </tr>
           <tr>
             <td class="tk">META</td><td class="num">—</td><td class="num">≈26.1x</td><td class="num">营收+33%，营业利润率43%→31%</td>
             <td><span class="quality mixed">利润率承压</span></td>
-            <td>收入增长依然亮眼，但AI相关折旧和资本开支已经开始实质性侵蚀利润率——这是"增长质量"而非"增长速度"出问题的典型样本。</td>
+            <td>收入增长依然亮眼，但AI相关折旧和资本开支已经开始实质性侵蚀利润率——这是"增长质量"出问题的典型样本。</td>
           </tr>
           <tr>
             <td class="tk">TSLA</td><td class="num">≈324x</td><td class="num">—</td><td class="num">核心车业务利润率持续下滑</td>
             <td><span class="quality stretch">估值脱节</span></td>
-            <td>324倍市盈率对应的当期盈利几乎可以忽略不计——估值完全押注机器人/自动驾驶等尚未兑现的故事，是组内基本面与股价鸿沟最大的一个。</td>
+            <td>324倍市盈率对应的当期盈利几乎可以忽略不计——估值完全押注机器人/自动驾驶，是组内基本面与股价鸿沟最大的。</td>
           </tr>
         </tbody>
       </table>
@@ -309,9 +309,9 @@
 
     <p class="subhead">真正的风险不在利润表，在现金流量表</p>
     <div class="risk-box">
-      <p>把七家公司的利润表单独拿出来看，故事都很动听——但资本开支的增速已经系统性超过了利润和现金流的增速：四大云厂商（微软、亚马逊、谷歌、Meta）2026年资本开支合计承诺超过6500亿美元，同比增长71%；放到整个超大规模厂商范围看，行业资本开支从2024年的2610亿美元，到2025年的4490亿美元，再到2026年逼近8000亿美元——三年翻了两倍还多。</p>
-      <p>代价是自由现金流被迅速榨干：2026年一季度，亚马逊、谷歌、特斯拉、Meta四家合计自由现金流仅66亿美元，对于合计市值以十万亿美元计的公司而言几乎可以忽略不计；摩根士丹利和美银均预计<span class="callout">亚马逊2026年全年自由现金流可能转负</span>，这意味着未来一段时间回购、股息乃至现金储备都可能被迫让位给资本开支。</p>
-      <p>换句话说：<b>净利润增长的"速度"目前看起来没问题，但支撑这个速度所需要的资本开支，正在以更快的速度吃掉真实的造血能力。</b>如果AI投资的回报兑现节奏比预期慢，第一个被压垮的不是利润表，而是资产负债表和现金储备。</p>
+      <p>把七家公司的利润表单独拿出来看，故事都很动听——但资本开支的增速已经系统性超过了利润和现金流的增速。</p>
+      <p>代价是自由现金流被迅速榨干：2026年一季度，亚马逊、谷歌、特斯拉、Meta四家合计自由现金流仅66亿美元，对于合计市值以十万亿美元计的公司来说，这个数字说明什么问题？</p>
+      <p>换句话说：<b>净利润增长的"速度"目前看起来没问题，但支撑这个速度所需要的资本开支，正在以更快的速度吃掉真实的造血能力。</b></p>
     </div>
   </section>
 
@@ -319,26 +319,26 @@
     <h2 class="section-title">最大的风险：循环融资的钱到底是谁的钱</h2>
     <p class="section-note">当AI基建投资的资金开始在同一批公司的资产负债表之间打转，"营收增长"和"自我造血"就变得难以区分。</p>
     <div class="risk-box">
-      <p>2026年最受关注的质疑，是这轮AI资本开支里有多大比例其实是"左手倒右手"：</p>
-      <div class="flow">英伟达 --约1000亿美元投资--> OpenAI
-OpenAI  --约3000亿美元云合同--> Oracle
-Oracle  --发债5000亿美元级别建数据中心--> （为OpenAI建设算力）
-OpenAI 对外算力承诺总额 --约1.4万亿美元--</div>
-      <p>同一批资金从芯片商流向模型公司，再流向云服务商，最后又以"收入"的形式流回芯片商——分析师估算，这类循环交易规模已<span class="callout">超过8000亿美元</span>。2026年2月，Oracle一份意在安抚市场的声明"对OpenAI履约能力有高度信心"，被知名投资人直指为"银行挤兑式措辞"，当天股价应声下跌约2.8%。</p>
-      <p>这正好呼应了此前聊到的巴菲特现金囤积、达利欧"估值集中度接近1929/2000年水平"的警告——七巨头如今占标普500市值的三分之一，一旦这套循环融资链条中任何一环（尤其是Oracle这类靠发债建设算力的公司）出现兑付问题，冲击不会停留在一家公司，而是会通过持股结构直接传导到整个指数。</p>
+      <p>2026年最受关注的质疑，是这轮AI资本开支里有多大比例其实是"左手倒右手"。</p>
+      <div class="flow">英伟达 --投资--> 模型公司
+模型公司 --云服务合同--> 云服务商
+云服务商 --发债建数据中心--> （为模型公司建设算力）
+模型公司对外承诺 --最终形成收入--</div>
+      <p>同一批资金从芯片商流向模型公司，再流向云服务商——分析师估算，这类循环交易规模已经成为显著风险。</p>
+      <p>这正好呼应了关于估值集中度的警告——七巨头如今占标普500市值的三分之一，一旦这套循环链条出现问题，传导速度会非常快。</p>
     </div>
   </section>
 
   <section class="closing">
-    <h2>三条结论</h2>
+    <h2>结论</h2>
     <ol>
-      <li><b>"七巨头"这个标签正在失去意义。</b>当组内最好和最差的涨幅相差近50个百分点（AMZN +20.5% vs TSLA −26.9%），继续把它们当作一个整体交易，本身就是一种风险——买指数≠买AI叙事，买AI叙事需要精选到公司层面。</li>
-      <li><b>资本开支的"质"比"量"更重要。</b>7000亿美元的AI资本开支总量本身不是风险，风险在于这笔钱多大比例能转化为真实、独立于关联方之外的现金流——Tier 1（NVDA/META）目前答得上这个问题，Tier 2的答案还需要更多季度验证。</li>
-      <li><b>集中度风险已经从"抽象数字"变成"具体传导路径"。</b>循环融资网络意味着，七巨头不再是七个独立的风险敞口，而是通过芯片-云-模型的供应链紧密捆绑在一起的一个系统——这也是为什么任何一家的财报意外，现在都能牵动全市场，而不只是自己的股价。</li>
-      <li><b>看Mag7的风险，利润表不如现金流量表诚实。</b>只要还在用GAAP净利润同比来判断"谁在加速"，就会被谷歌、亚马逊这类被股权浮盈推高的数字误导；真正该盯的是经营利润、利润率变化和自由现金流——按这把尺子衡量，英伟达、微软增长质量最扎实，Meta的利润率已经在为AI买单，特斯拉的估值则完全没有当期盈利支撑。</li>
+      <li><b>"七巨头"这个标签正在失去意义。</b>当组内最好和最差的涨幅相差近50个百分点，继续把它们当作一个整体交易是错误的。</li>
+      <li><b>资本开支的"质"比"量"更重要。</b>7000亿美元的AI资本开支总量本身不是风险，风险在于这笔钱多大比例能转化为真实的现金流。</li>
+      <li><b>集中度风险已经从"抽象数字"变成"具体传导路径"。</b>循环融资网络意味着，七巨头不再是七个独立的风险敞口。</li>
+      <li><b>看Mag7的风险，利润表不如现金流量表诚实。</b>只要还在用GAAP净利润同比来判断"谁在加速"，就会被股权浮盈推高的数字所迷惑。</li>
     </ol>
   </section>
 
-  <footer>数据来源：公开财报指引、公开财经媒体报道整理 · 市值与涨跌幅为2026年8月下旬近似值，AI资本开支为公司公开指引</footer>
+  <footer>数据来源：公开财报指引、公开财经媒体报道整理 · 市值与涨跌幅为2026年8月下旬近似值</footer>
 
 </div>
