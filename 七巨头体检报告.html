@@ -1,0 +1,344 @@
+<title>七巨头体检报告</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  :root{
+    --paper:#ede9e6;
+    --paper-raised:#f7f4f1;
+    --ink:#1d1b22;
+    --ink-soft:#524d58;
+    --muted:#87818b;
+    --rule:#d4cdd6;
+    --rule-strong:#b3a9b8;
+    --bull:#2f6b4f;
+    --bull-soft:#dce8de;
+    --bear:#a6362a;
+    --bear-soft:#f1ded9;
+    --gold:#6a4c93;
+    --gold-soft:#e6def0;
+    --t1:#2f6b4f; --t1-soft:#dce8de;
+    --t2:#8a6d1f; --t2-soft:#ece2c4;
+    --t3:#a6362a; --t3-soft:#f1ded9;
+    --shadow: 0 1px 0 rgba(29,27,34,0.06);
+    --serif: "Noto Serif SC", "Songti SC", "STSong", serif;
+    --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#17151a; --paper-raised:#1e1c22; --ink:#e7e3e8; --ink-soft:#b6afba; --muted:#827c86;
+      --rule:#312e37; --rule-strong:#47434e;
+      --bull:#5fae86; --bull-soft:#1c2b23; --bear:#e2695a; --bear-soft:#3a231e;
+      --gold:#a389cf; --gold-soft:#2a2333;
+      --t1:#5fae86; --t1-soft:#1c2b23; --t2:#cba653; --t2-soft:#332c1a; --t3:#e2695a; --t3-soft:#3a231e;
+      --shadow: 0 1px 0 rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#17151a; --paper-raised:#1e1c22; --ink:#e7e3e8; --ink-soft:#b6afba; --muted:#827c86;
+    --rule:#312e37; --rule-strong:#47434e;
+    --bull:#5fae86; --bull-soft:#1c2b23; --bear:#e2695a; --bear-soft:#3a231e;
+    --gold:#a389cf; --gold-soft:#2a2333;
+    --t1:#5fae86; --t1-soft:#1c2b23; --t2:#cba653; --t2-soft:#332c1a; --t3:#e2695a; --t3-soft:#3a231e;
+    --shadow: 0 1px 0 rgba(0,0,0,0.4);
+  }
+
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; -webkit-font-smoothing:antialiased; }
+  ::selection{ background:var(--gold-soft); }
+  .page{ max-width:1040px; margin:0 auto; padding:clamp(28px,5vw,72px) clamp(18px,4vw,32px) 100px; }
+
+  header.masthead{ border-bottom:2px solid var(--ink); padding-bottom:22px; margin-bottom:32px; }
+  .eyebrow{ font-family:var(--mono); font-size:12.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); display:flex; gap:10px; align-items:center; margin-bottom:14px; }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);}
+  h1{ font-family:var(--serif); font-weight:900; font-size:clamp(28px,4.4vw,42px); margin:0 0 10px; text-wrap:balance; }
+  .dek{ font-size:16px; color:var(--ink-soft); max-width:66ch; margin:0; }
+
+  /* group stat strip */
+  .group-strip{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1px;
+    background:var(--rule); border:1px solid var(--rule-strong); margin:32px 0 40px;
+  }
+  .gstat{ background:var(--paper-raised); padding:16px 18px; }
+  .gstat .k{ font-family:var(--mono); font-size:10.5px; letter-spacing:0.07em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:6px; }
+  .gstat .v{ font-family:var(--mono); font-size:21px; font-weight:700; font-variant-numeric:tabular-nums; }
+  .gstat .v.down{ color:var(--bear); }
+  .gstat .sub{ font-size:12.5px; color:var(--muted); margin-top:3px; }
+
+  section{ margin-bottom:48px; }
+  h2.section-title{ font-family:var(--serif); font-size:22px; font-weight:700; margin:0 0 6px; }
+  .section-note{ color:var(--ink-soft); font-size:14.5px; max-width:70ch; margin:0 0 20px; }
+
+  /* valuation table */
+  .table-wrap{ overflow-x:auto; border:1px solid var(--rule-strong); background:var(--paper-raised); box-shadow:var(--shadow); margin-bottom:20px; }
+  table{ border-collapse:collapse; width:100%; min-width:720px; font-size:13.5px; }
+  thead th{
+    font-family:var(--mono); font-weight:600; font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--muted); text-align:left; padding:11px 13px; border-bottom:1px solid var(--rule-strong); white-space:nowrap;
+  }
+  tbody td{ padding:11px 13px; border-bottom:1px solid var(--rule); vertical-align:top; }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background:rgba(0,0,0,0.02); }
+  td.tk{ font-family:var(--mono); font-weight:700; white-space:nowrap; }
+  td.num{ font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink-soft); }
+  .quality{ font-family:var(--mono); font-size:11px; font-weight:700; padding:2px 8px; border-radius:3px; white-space:nowrap; display:inline-block; letter-spacing:0.02em; }
+  .quality.real{ color:var(--t1); background:var(--t1-soft); }
+  .quality.mixed{ color:var(--t2); background:var(--t2-soft); }
+  .quality.stretch{ color:var(--t3); background:var(--t3-soft); }
+
+  .subhead{ font-family:var(--serif); font-size:16px; font-weight:700; margin:22px 0 10px; }
+
+  /* tier legend */
+  .tiers{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-bottom:36px; }
+  .tier{ border:1px solid var(--rule-strong); background:var(--paper-raised); padding:14px 16px; border-top:4px solid var(--tc); }
+  .tier.t1{ --tc:var(--t1); } .tier.t2{ --tc:var(--t2); } .tier.t3{ --tc:var(--t3); }
+  .tier .label{ font-family:var(--mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--tc); font-weight:700; margin-bottom:6px; }
+  .tier .members{ font-family:var(--mono); font-size:15px; font-weight:600; margin-bottom:6px; }
+  .tier p{ margin:0; font-size:13.5px; color:var(--ink-soft); }
+
+  /* company cards */
+  .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; }
+  .card{ border:1px solid var(--rule-strong); background:var(--paper-raised); padding:18px 20px; border-left:4px solid var(--tc); }
+  .card-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:10px; }
+  .ticker{ font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:0.05em; color:var(--muted); }
+  .company{ font-family:var(--serif); font-size:19px; font-weight:700; margin:2px 0 0; }
+  .ytd{ font-family:var(--mono); font-weight:700; font-size:17px; font-variant-numeric:tabular-nums; padding:2px 9px; border-radius:3px; white-space:nowrap; }
+  .ytd.up{ color:var(--bull); background:var(--bull-soft); }
+  .ytd.down{ color:var(--bear); background:var(--bear-soft); }
+  .card-stats{ display:flex; gap:18px; flex-wrap:wrap; margin-bottom:12px; padding-bottom:12px; border-bottom:1px dashed var(--rule-strong); }
+  .card-stats div{ font-size:12.5px; }
+  .card-stats .k{ display:block; font-family:var(--mono); font-size:10px; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted); margin-bottom:3px; }
+  .card-stats .v{ font-family:var(--mono); font-weight:600; font-variant-numeric:tabular-nums; }
+  .card p.thesis{ margin:0; font-size:14px; color:var(--ink); }
+  .card p.thesis b{ color:var(--tc); font-weight:700; }
+
+  /* circular financing */
+  .risk-box{ border:1px solid var(--rule-strong); background:var(--paper-raised); padding:22px 24px; }
+  .risk-box .flow{ font-family:var(--mono); font-size:14px; color:var(--ink-soft); background:var(--paper); border:1px dashed var(--rule-strong); padding:14px 16px; margin:14px 0; overflow-x:auto; white-space:pre; }
+  .risk-box p{ font-size:15px; margin:0 0 10px; max-width:72ch; }
+  .risk-box p:last-child{ margin-bottom:0; }
+  .risk-box .callout{ color:var(--bear); font-weight:700; }
+
+  .closing{ margin-top:8px; padding-top:28px; border-top:2px solid var(--ink); }
+  .closing h2{ font-family:var(--serif); font-size:22px; margin:0 0 14px; }
+  .closing ol{ padding-left:20px; max-width:72ch; }
+  .closing li{ margin-bottom:10px; font-size:15px; color:var(--ink-soft); }
+  .closing li b{ color:var(--ink); }
+
+  footer{ margin-top:48px; font-family:var(--mono); font-size:11.5px; color:var(--muted); }
+
+  @media (max-width:520px){ .card-stats{ gap:12px; } }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow"><span class="dot"></span>七巨头体检 · 2026.08</div>
+    <h1>七巨头体检报告</h1>
+    <p class="dek">2023-2025年扛起标普和纳指几乎全部涨幅的"美股七巨头"，2026年画风突变：整体跑输大盘，内部分化成三个明显不同的阵营。这是一份体检报告，不是复盘史——重点拆解每家公司的估值贵不贵、利润增长有多少水分、以及资本开支正在多快地吃掉现金流。</p>
+  </header>
+
+  <div class="group-strip">
+    <div class="gstat"><span class="k">合计市值</span><span class="v">23.7万亿美元</span><span class="sub">占标普500约33.9%</span></div>
+    <div class="gstat"><span class="k">2026年至今涨幅</span><span class="v down">+4.2%</span><span class="sub">标普500同期约+13%，跑输</span></div>
+    <div class="gstat"><span class="k">2026年AI资本开支</span><span class="v">超7000亿美元</span><span class="sub">较2025年约4000亿激增75%</span></div>
+    <div class="gstat"><span class="k">最佳/最差</span><span class="v">AMZN +20.5% / TSLA −26.9%</span><span class="sub">七只股票里仅两只跑赢大盘</span></div>
+  </div>
+
+  <section>
+    <h2 class="section-title">从"抱团七雄"到三级分化</h2>
+    <p class="section-note">这轮AI叙事不再是"一荣俱荣"——市场已经开始按增长质量和资本开支效率，把七巨头明确拆成三个梯队。</p>
+    <div class="tiers">
+      <div class="tier t1">
+        <div class="label">Tier 1 · 加速兑现</div>
+        <div class="members">NVDA · META</div>
+        <p>营收增速超20%且利润率仍在扩张，AI投入直接兑现为收入和现金流，是这轮行情真正的"发动机"。</p>
+      </div>
+      <div class="tier t2">
+        <div class="label">Tier 2 · 稳健但估值已高</div>
+        <div class="members">GOOGL · AMZN · AAPL · MSFT</div>
+        <p>营收增速5%-15%，基本面依然稳健，但股价已计入了很高的乐观预期，对利空的容错空间明显变窄。</p>
+      </div>
+      <div class="tier t3">
+        <div class="label">Tier 3 · 掉队</div>
+        <div class="members">TSLA</div>
+        <p>过去12个月按主营业务口径已转为亏损，股价年内跌幅接近27%，是七巨头里唯一被移出"确定性"叙事的成员。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">七家公司逐一体检</h2>
+    <p class="section-note">市值、年内涨跌幅、2026年AI/资本开支指引，以及一句话现状判断。</p>
+    <div class="cards">
+
+      <div class="card" style="--tc:var(--t1)">
+        <div class="card-head">
+          <div><span class="ticker">NVDA</span><h3 class="company">英伟达</h3></div>
+          <span class="ytd up">持续新高</span>
+        </div>
+        <div class="card-stats">
+          <div><span class="k">市值</span><span class="v">≈5.2-5.5万亿美元</span></div>
+          <div><span class="k">AI加速器份额</span><span class="v">≈81%</span></div>
+          <div><span class="k">单季芯片营收</span><span class="v">≈920亿美元</span></div>
+        </div>
+        <p class="thesis"><b>现状：</b>全球市值最高的公司，是这轮AI资本开支周期里唯一"旱涝保收"的卖铲人，但也是循环融资争议的中心。</p>
+      </div>
+
+      <div class="card" style="--tc:var(--t1)">
+        <div class="card-head">
+          <div><span class="ticker">META</span><h3 class="company">Meta</h3></div>
+          <span class="ytd up">增长加速</span>
+        </div>
+        <div class="card-stats">
+          <div><span class="k">2026年资本开支指引</span><span class="v">1250-1450亿美元</span></div>
+          <div><span class="k">增速定位</span><span class="v">Tier 1</span></div>
+        </div>
+        <p class="thesis"><b>现状：</b>广告业务被AI推荐算法明显提振，是七巨头里少数"AI投入→本业变现"路径最清晰的一家，扎克伯格本人也公开提示了产能过剩的可能性。</p>
+      </div>
+
+      <div class="card" style="--tc:var(--t2)">
+        <div class="card-head">
+          <div><span class="ticker">AMZN</span><h3 class="company">亚马逊</h3></div>
+          <span class="ytd up">+20.5%</span>
+        </div>
+        <div class="card-stats">
+          <div><span class="k">2026年至今涨幅</span><span class="v">年内最佳</span></div>
+          <div><span class="k">2026年资本开支指引</span><span class="v">超2000亿美元</span></div>
+        </div>
+        <p class="thesis"><b>现状：</b>云计算AWS重新加速增长，是七巨头里今年表现最好的一只，资本开支主要投向AI数据中心而非零售扩张。</p>
+      </div>
+
+      <div class="card" style="--tc:var(--t2)">
+        <div class="card-head">
+          <div><span class="ticker">GOOGL</span><h3 class="company">谷歌/Alphabet</h3></div>
+          <span class="ytd up">跑赢均值</span>
+        </div>
+        <div class="card-stats">
+          <div><span class="k">2026年资本开支指引</span><span class="v">1800-1900亿美元</span></div>
+          <div><span class="k">增速定位</span><span class="v">Tier 2</span></div>
+        </div>
+        <p class="thesis"><b>现状：</b>搜索广告基本盘稳固，云计算和Gemini模型受到市场认可，是Tier 2里表现相对稳健的一家。</p>
+      </div>
+
+      <div class="card" style="--tc:var(--t2)">
+        <div class="card-head">
+          <div><span class="ticker">AAPL</span><h3 class="company">苹果</h3></div>
+          <span class="ytd down">高位回落</span>
+        </div>
+        <div class="card-stats">
+          <div><span class="k">年内高点市值</span><span class="v">≈4.9万亿美元</span></div>
+          <div><span class="k">较52周高点</span><span class="v down">−11.7%</span></div>
+        </div>
+        <p class="thesis"><b>现状：</b>年内曾创下市值纪录，但AI功能（Apple Intelligence）落地慢于同行的疑虑挥之不去，股价从高点明显回落。</p>
+      </div>
+
+      <div class="card" style="--tc:var(--t2)">
+        <div class="card-head">
+          <div><span class="ticker">MSFT</span><h3 class="company">微软</h3></div>
+          <span class="ytd up">+3.9%</span>
+        </div>
+        <div class="card-stats">
+          <div><span class="k">2026年资本开支指引</span><span class="v">≈1900亿美元</span></div>
+          <div><span class="k">2026年至今涨幅</span><span class="v">明显弱于历史均值</span></div>
+        </div>
+        <p class="thesis"><b>现状：</b>Azure云和Copilot订阅持续增长，但资本开支规模最大、投资回报周期最受质疑，市场对其"何时兑现"的耐心正在变薄。</p>
+      </div>
+
+      <div class="card" style="--tc:var(--t3)">
+        <div class="card-head">
+          <div><span class="ticker">TSLA</span><h3 class="company">特斯拉</h3></div>
+          <span class="ytd down">−26.9%</span>
+        </div>
+        <div class="card-stats">
+          <div><span class="k">2026年至今涨幅</span><span class="v down">七巨头最差</span></div>
+          <div><span class="k">主营业务盈利</span><span class="v down">TTM口径转亏</span></div>
+        </div>
+        <p class="thesis"><b>现状：</b>核心电动车业务增长停滞、盈利转亏，估值支撑几乎完全转移到自动驾驶/机器人叙事上，已被市场明确移出"AI核心资产"梯队。</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">估值 vs 净利润：拆开看增长的"含金量"</h2>
+    <p class="section-note">Mag7整体前瞻市盈率约28倍，只比标普500（约23.5倍）贵不到20%，从PEG（估值/成长性）口径看甚至比"其余493家"更便宜——但这个平均数掩盖了组内三种完全不同的"利润故事"：真实经营性增长、被一次性股权浮盈掺水的增长、以及和当期盈利完全脱节的估值。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>股票</th><th>静态PE</th><th>前瞻PE</th><th>净利润/经营利润增速</th><th>增长含金量</th><th>一句话解读</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="tk">NVDA</td><td class="num">≈26.4x</td><td class="num">≈17.8-24.5x</td><td class="num">经营利润同比&gt;3倍</td>
+            <td><span class="quality real">真实增长</span></td>
+            <td>PEG仅0.38，全组唯一被市场认定为"便宜"的公司——股价涨得快，但利润涨得更快，估值反而在被动消化。</td>
+          </tr>
+          <tr>
+            <td class="tk">AMZN</td><td class="num">≈35x</td><td class="num">≈30x</td><td class="num">经营利润+43%（AWS+64%）</td>
+            <td><span class="quality real">真实增长</span></td>
+            <td>GAAP净利润被约534亿美元Anthropic股权浮盈严重推高，但剔除后经营利润+43%、AWS利润率扩张650个基点，成色是组内最实的之一。</td>
+          </tr>
+          <tr>
+            <td class="tk">MSFT</td><td class="num">≈27x</td><td class="num">≈24x</td><td class="num">净利润+31%</td>
+            <td><span class="quality real">真实增长</span></td>
+            <td>一年前投资者付37倍市盈率，如今只需27倍——因为净利润(+31%)增速持续跑赢股价涨幅，罕见的"越涨越便宜"。</td>
+          </tr>
+          <tr>
+            <td class="tk">AAPL</td><td class="num">≈35x</td><td class="num">≈30x</td><td class="num">净利润+27%</td>
+            <td><span class="quality real">真实增长</span></td>
+            <td>没有一次性损益干扰，iPhone和服务双轮驱动的27%净利润增长干净、可持续，估值走势和基本面基本同步。</td>
+          </tr>
+          <tr>
+            <td class="tk">GOOGL</td><td class="num">≈17.4x</td><td class="num">≈20x</td><td class="num">净利润+298%（经营+30%）</td>
+            <td><span class="quality mixed">掺水增长</span></td>
+            <td>表观市盈率全组最低，但Q2净利润的298%增幅里近九成来自Anthropic等股权的账面浮盈，剔除后经营利润增速约30%——依然稳健，但绝不是表面数字暗示的"提速"。</td>
+          </tr>
+          <tr>
+            <td class="tk">META</td><td class="num">—</td><td class="num">≈26.1x</td><td class="num">营收+33%，营业利润率43%→31%</td>
+            <td><span class="quality mixed">利润率承压</span></td>
+            <td>收入增长依然亮眼，但AI相关折旧和资本开支已经开始实质性侵蚀利润率——这是"增长质量"而非"增长速度"出问题的典型样本。</td>
+          </tr>
+          <tr>
+            <td class="tk">TSLA</td><td class="num">≈324x</td><td class="num">—</td><td class="num">核心车业务利润率持续下滑</td>
+            <td><span class="quality stretch">估值脱节</span></td>
+            <td>324倍市盈率对应的当期盈利几乎可以忽略不计——估值完全押注机器人/自动驾驶等尚未兑现的故事，是组内基本面与股价鸿沟最大的一个。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="subhead">真正的风险不在利润表，在现金流量表</p>
+    <div class="risk-box">
+      <p>把七家公司的利润表单独拿出来看，故事都很动听——但资本开支的增速已经系统性超过了利润和现金流的增速：四大云厂商（微软、亚马逊、谷歌、Meta）2026年资本开支合计承诺超过6500亿美元，同比增长71%；放到整个超大规模厂商范围看，行业资本开支从2024年的2610亿美元，到2025年的4490亿美元，再到2026年逼近8000亿美元——三年翻了两倍还多。</p>
+      <p>代价是自由现金流被迅速榨干：2026年一季度，亚马逊、谷歌、特斯拉、Meta四家合计自由现金流仅66亿美元，对于合计市值以十万亿美元计的公司而言几乎可以忽略不计；摩根士丹利和美银均预计<span class="callout">亚马逊2026年全年自由现金流可能转负</span>，这意味着未来一段时间回购、股息乃至现金储备都可能被迫让位给资本开支。</p>
+      <p>换句话说：<b>净利润增长的"速度"目前看起来没问题，但支撑这个速度所需要的资本开支，正在以更快的速度吃掉真实的造血能力。</b>如果AI投资的回报兑现节奏比预期慢，第一个被压垮的不是利润表，而是资产负债表和现金储备。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">最大的风险：循环融资的钱到底是谁的钱</h2>
+    <p class="section-note">当AI基建投资的资金开始在同一批公司的资产负债表之间打转，"营收增长"和"自我造血"就变得难以区分。</p>
+    <div class="risk-box">
+      <p>2026年最受关注的质疑，是这轮AI资本开支里有多大比例其实是"左手倒右手"：</p>
+      <div class="flow">英伟达 --约1000亿美元投资--> OpenAI
+OpenAI  --约3000亿美元云合同--> Oracle
+Oracle  --发债5000亿美元级别建数据中心--> （为OpenAI建设算力）
+OpenAI 对外算力承诺总额 --约1.4万亿美元--</div>
+      <p>同一批资金从芯片商流向模型公司，再流向云服务商，最后又以"收入"的形式流回芯片商——分析师估算，这类循环交易规模已<span class="callout">超过8000亿美元</span>。2026年2月，Oracle一份意在安抚市场的声明"对OpenAI履约能力有高度信心"，被知名投资人直指为"银行挤兑式措辞"，当天股价应声下跌约2.8%。</p>
+      <p>这正好呼应了此前聊到的巴菲特现金囤积、达利欧"估值集中度接近1929/2000年水平"的警告——七巨头如今占标普500市值的三分之一，一旦这套循环融资链条中任何一环（尤其是Oracle这类靠发债建设算力的公司）出现兑付问题，冲击不会停留在一家公司，而是会通过持股结构直接传导到整个指数。</p>
+    </div>
+  </section>
+
+  <section class="closing">
+    <h2>三条结论</h2>
+    <ol>
+      <li><b>"七巨头"这个标签正在失去意义。</b>当组内最好和最差的涨幅相差近50个百分点（AMZN +20.5% vs TSLA −26.9%），继续把它们当作一个整体交易，本身就是一种风险——买指数≠买AI叙事，买AI叙事需要精选到公司层面。</li>
+      <li><b>资本开支的"质"比"量"更重要。</b>7000亿美元的AI资本开支总量本身不是风险，风险在于这笔钱多大比例能转化为真实、独立于关联方之外的现金流——Tier 1（NVDA/META）目前答得上这个问题，Tier 2的答案还需要更多季度验证。</li>
+      <li><b>集中度风险已经从"抽象数字"变成"具体传导路径"。</b>循环融资网络意味着，七巨头不再是七个独立的风险敞口，而是通过芯片-云-模型的供应链紧密捆绑在一起的一个系统——这也是为什么任何一家的财报意外，现在都能牵动全市场，而不只是自己的股价。</li>
+      <li><b>看Mag7的风险，利润表不如现金流量表诚实。</b>只要还在用GAAP净利润同比来判断"谁在加速"，就会被谷歌、亚马逊这类被股权浮盈推高的数字误导；真正该盯的是经营利润、利润率变化和自由现金流——按这把尺子衡量，英伟达、微软增长质量最扎实，Meta的利润率已经在为AI买单，特斯拉的估值则完全没有当期盈利支撑。</li>
+    </ol>
+  </section>
+
+  <footer>数据来源：公开财报指引、公开财经媒体报道整理 · 市值与涨跌幅为2026年8月下旬近似值，AI资本开支为公司公开指引</footer>
+
+</div>
